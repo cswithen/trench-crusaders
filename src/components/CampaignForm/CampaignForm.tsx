@@ -4,13 +4,25 @@ import styles from './CampaignForm.module.scss';
 import Button from '../Shared/Button';
 import Input from '../Shared/Input';
 
-export default function CampaignForm() {
+type CampaignFormProps = {
+  onCreated?: () => void;
+};
+
+export default function CampaignForm({ onCreated }: CampaignFormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const { createCampaign } = useCampaigns();
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    createCampaign({ name, description });
+    setName('');
+    setDescription('');
+    if (onCreated) onCreated();
+  };
+
   return (
-    <form className={styles.form} onSubmit={e => { e.preventDefault(); createCampaign({ name, description }); setName(''); setDescription(''); }}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <Input
         type="text"
         placeholder="Campaign Name"
