@@ -1,5 +1,38 @@
 .form {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 1.2rem;
   margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.form-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.submit-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form-actions {
+    flex-direction: column;
+  }
 }

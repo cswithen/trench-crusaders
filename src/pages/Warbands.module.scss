@@ -1,4 +1,28 @@
 @use '../styles/variables.scss' as *;
+// Rally Warband button
+.rally-btn {
+  background: $tc-accent;
+  color: $tc-on-accent;
+  border: none;
+  border-radius: $tc-radius;
+  padding: 0.5em 1.2em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0.5rem;
+  &:hover,
+  &:focus {
+    background: $tc-accent-hover;
+    color: $tc-on-accent;
+    outline: none;
+    box-shadow: 0 0 0 2px $tc-accent-focus-shadow;
+  }
+  &:active {
+    background: $tc-accent-active;
+    color: $tc-on-accent;
+  }
+}
 
 .warbands {
   padding: 2rem;

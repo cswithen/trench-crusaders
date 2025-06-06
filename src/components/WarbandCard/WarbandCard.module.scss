@@ -1,4 +1,25 @@
 @use '../../styles/variables.scss' as *;
+.stats {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  margin-top: 1em;
+  font-size: 1em;
+  color: inherit;
+  font-weight: 500;
+  justify-content: flex-start;
+}
+.stats span {
+  padding: 0;
+  background: none;
+  color: inherit;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 0;
+  display: inline;
+  align-items: baseline;
+  justify-content: flex-start;
+}
 
 .card {
   background: $tc-background;
