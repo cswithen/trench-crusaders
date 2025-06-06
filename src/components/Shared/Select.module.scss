@@ -1,0 +1,74 @@
+@use '../../styles/variables.scss' as *;
+.required {
+  color: $tc-accent;
+  margin-left: 2px;
+}
+
+// Match Input/Button padding, border, and focus/active effects
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.select {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  font-size: 1.1rem;
+  border: 2px solid $tc-border;
+  border-radius: $tc-radius;
+  background: $tc-input-bg;
+  color: $tc-text;
+  transition: border-color 0.2s, background 0.2s;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+// Custom arrow
+.select {
+  position: relative;
+}
+.select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1.1rem;
+  width: 0.7em;
+  height: 0.7em;
+  pointer-events: none;
+  border: none;
+  border-left: 0.18em solid transparent;
+  border-right: 0.18em solid transparent;
+  border-top: 0.18em solid $tc-text;
+  background: none;
+  transform: translateY(-50%);
+  display: block;
+}
+.select:focus {
+  outline: none;
+  border-color: $tc-primary;
+  background: $tc-input-focus-bg;
+}
+.select:active {
+  border-color: $tc-accent;
+  background: $tc-accent-active;
+}
+.select:disabled {
+  background: $tc-surface-alt;
+  color: $tc-disabled-text;
+  border-color: $tc-border-disabled;
+  cursor: not-allowed;
+}
+.select--error {
+  border-color: $tc-danger-border;
+  background: $tc-danger-bg;
+}
+.label {
+  font-size: 1rem;
+  color: $tc-text;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}

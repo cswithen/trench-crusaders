@@ -21,17 +21,15 @@
   transition: background 0.2s;
 }
 
-.match-history-table__row--win {
+.match-history-table .match-history-table__row--win td {
   background: $tc-success-bg;
   color: $tc-success-text;
 }
-
-.match-history-table__row--loss {
+.match-history-table .match-history-table__row--loss td {
   background: $tc-danger-bg;
   color: $tc-danger-text;
 }
-
-.match-history-table__row--pending {
+.match-history-table .match-history-table__row--pending td {
   background: $tc-surface-alt;
   color: $tc-text;
 }

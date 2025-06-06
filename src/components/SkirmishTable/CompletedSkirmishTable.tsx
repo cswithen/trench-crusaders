@@ -25,6 +25,17 @@ const trophy = (
   </span>
 );
 
+const skull = (
+  <span
+    role="img"
+    aria-label="Loser"
+    className={styles['skirmish-table__loser-icon']}
+    style={{ marginLeft: 4 }}
+  >
+    💀
+  </span>
+);
+
 const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
   return (
     <SkirmishTableBase
@@ -55,10 +66,12 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
             <td>
               {left?.name || sk.left_warband_id}
               {sk.winner_id === sk.left_warband_id && trophy}
+              {sk.winner_id && sk.winner_id !== sk.left_warband_id && skull}
             </td>
             <td>
               {right?.name || sk.right_warband_id}
               {sk.winner_id === sk.right_warband_id && trophy}
+              {sk.winner_id && sk.winner_id !== sk.right_warband_id && skull}
             </td>
           </tr>
         );
@@ -71,9 +84,11 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
           <>
             <strong>Arena:</strong> {sk.arena_name || 'Unknown'}<br />
             <strong>Attacker:</strong> {left?.name || sk.left_warband_id}
-            {sk.winner_id === sk.left_warband_id && trophy}<br />
+            {sk.winner_id === sk.left_warband_id && trophy}
+            {sk.winner_id && sk.winner_id !== sk.left_warband_id && skull}<br />
             <strong>Defender:</strong> {right?.name || sk.right_warband_id}
-            {sk.winner_id === sk.right_warband_id && trophy}<br />
+            {sk.winner_id === sk.right_warband_id && trophy}
+            {sk.winner_id && sk.winner_id !== sk.right_warband_id && skull}<br />
             <strong>Winner:</strong> {winner?.name || sk.winner_id}<br />
             <strong>Created:</strong> {sk.created_at ? new Date(sk.created_at).toLocaleString() : 'Unknown'}
           </>

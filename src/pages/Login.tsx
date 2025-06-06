@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
 import Button from '../components/Shared/Button';
+import Input from '../components/Shared/Input';
 
 
 
@@ -48,19 +49,21 @@ function Login() {
       <div className={styles.login}>
         <h2>{isSignUp ? 'Sign Up' : 'Login'}</h2>
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="email"
             placeholder="Email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
+            label="Email"
           />
-          <input
+          <Input
             type="password"
             placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
+            label="Password"
           />
           {isSignUp && (
             <input

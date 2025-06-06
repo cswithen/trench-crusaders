@@ -3,6 +3,9 @@ import { useWarbands, useUpdateWarband } from '../hooks/useWarbands';
 import { useSkirmishes } from '../hooks/useSkirmishes';
 import { useAuth } from '../hooks/useAuth';
 import { useState, useEffect } from 'react';
+import Input from '../components/Shared/Input';
+import Select from '../components/Shared/Select';
+import Button from '../components/Shared/Button';
 import { useFactions, useSubfactions } from '../hooks/useFactions';
 import WarbandMatchHistoryTable from '../components/SkirmishTable/WarbandMatchHistoryTable';
 import styles from './Warbands.module.scss';
@@ -75,42 +78,36 @@ export default function WarbandPage() {
       <h2>Warband Details</h2>
       {editing ? (
         <>
-          <input value={name} onChange={e => setName(e.target.value)} disabled={saving} />
+          <Input value={name} onChange={e => setName(e.target.value)} disabled={saving} label="Warband Name" />
           <div style={{ margin: '1em 0' }}>
-            <label>
-              Faction:{' '}
-              <select
-                value={factionId ?? ''}
-                onChange={e => {
-                  setFactionId(e.target.value || null);
-                  setSubfactionId(null); // Reset subfaction if faction changes
-                }}
-                disabled={saving}
-              >
-                <option value="">None</option>
-                {factions.map(f => (
-                  <option key={f.id} value={f.id}>{f.name}</option>
-                ))}
-              </select>
-            </label>
+            <Select
+              label="Faction"
+              value={factionId ?? ''}
+              onChange={val => {
+                setFactionId(val || null);
+                setSubfactionId(null);
+              }}
+              options={[
+                { value: '', label: 'None' },
+                ...factions.map(f => ({ value: f.id, label: f.name }))
+              ]}
+              disabled={saving}
+            />
           </div>
           <div style={{ margin: '1em 0' }}>
-            <label>
-              Subfaction:{' '}
-              <select
-                value={subfactionId ?? ''}
-                onChange={e => setSubfactionId(e.target.value || null)}
-                disabled={saving || !factionId}
-              >
-                <option value="">None</option>
-                {subfactions.map(sf => (
-                  <option key={sf.id} value={sf.id}>{sf.name}</option>
-                ))}
-              </select>
-            </label>
+            <Select
+              label="Subfaction"
+              value={subfactionId ?? ''}
+              onChange={val => setSubfactionId(val || null)}
+              options={[
+                { value: '', label: 'None' },
+                ...subfactions.map(sf => ({ value: sf.id, label: sf.name }))
+              ]}
+              disabled={saving || !factionId}
+            />
           </div>
-          <button onClick={handleSave} disabled={saving || !name.trim()}>Save</button>
-          <button onClick={() => setEditing(false)} disabled={saving}>Cancel</button>
+          <Button onClick={handleSave} disabled={saving || !name.trim()}>Save</Button>
+          <Button onClick={() => setEditing(false)} disabled={saving} type="button" variant="secondary">Cancel</Button>
           {error && <span style={{ color: 'red', marginLeft: 8 }}>{error}</span>}
         </>
       ) : (
@@ -120,13 +117,13 @@ export default function WarbandPage() {
             <strong>Faction:</strong> {factions.find(f => f.id === warband.faction_id)?.name || <em>None</em>}<br />
             <strong>Subfaction:</strong> {subfactions.find(sf => sf.id === warband.subfaction_id)?.name || <em>None</em>}
           </div>
-          {isOwner && <button onClick={() => {
+          {isOwner && <Button onClick={() => {
             setEditing(true);
             setSuccess(false);
             setName(warband.name);
             setFactionId(warband.faction_id ?? null);
             setSubfactionId(warband.subfaction_id ?? null);
-          }}>Edit</button>}
+          }}>Edit</Button>}
           {success && <span style={{ color: 'green', marginLeft: 8 }}>Warband updated!</span>}
         </>
       )}

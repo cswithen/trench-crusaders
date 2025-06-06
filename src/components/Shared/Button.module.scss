@@ -1,16 +1,71 @@
 @use '../../styles/variables.scss' as *;
+// Secondary button variant
+.button.button--secondary,
+.button--secondary.button {
+  background: transparent;
+  color: $tc-accent;
+  border: 2px solid $tc-accent;
+  box-shadow: none;
+
+  &:hover {
+    background: $tc-accent-hover;
+    color: $tc-on-accent;
+    border-color: $tc-accent-hover;
+  }
+  &:focus {
+    outline: none;
+    background: $tc-accent-focus;
+    color: $tc-on-accent;
+    border-color: $tc-accent;
+    box-shadow: 0 0 0 2px $tc-accent-focus-shadow;
+  }
+  &:active {
+    background: $tc-accent-active;
+    color: $tc-on-accent;
+    border-color: $tc-accent;
+    box-shadow: 0 1px 4px 0 $tc-accent-active-shadow;
+  }
+  &:disabled {
+    background: $tc-secondary;
+    color: $tc-on-accent;
+    border: none;
+    box-shadow: none;
+  }
+}
 
 .button {
   background: $tc-accent;
-  color: #fff;
+  color: $tc-on-accent;
   border: none;
   border-radius: $tc-radius;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1rem;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: $tc-accent-hover;
+    color: $tc-on-accent;
+    box-shadow: 0 2px 8px 0 $tc-accent-shadow;
+  }
+  &:focus {
+    outline: none;
+    background: $tc-accent-focus;
+    color: $tc-on-accent;
+    box-shadow: 0 0 0 2px $tc-accent-focus-shadow;
+    border: 2px solid $tc-accent;
+  }
+  &:active {
+    background: $tc-accent-active;
+    color: $tc-on-accent;
+    box-shadow: 0 1px 4px 0 $tc-accent-active-shadow;
+    border: 2px solid $tc-accent;
+  }
   &:disabled {
     background: $tc-secondary;
     cursor: not-allowed;
+    color: $tc-on-accent;
+    box-shadow: none;
+    border: none;
   }
 }

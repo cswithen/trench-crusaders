@@ -38,9 +38,12 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({ warband, skirmishes,
             <tr
               key={sk.id}
               className={
-                result === 'win' ? styles['match-history-table__row--win'] :
-                result === 'loss' ? styles['match-history-table__row--loss'] :
-                styles['match-history-table__row--pending']
+                styles['match-history-table__row'] + ' ' +
+                (result === 'win'
+                  ? styles['match-history-table__row--win']
+                  : result === 'loss'
+                  ? styles['match-history-table__row--loss']
+                  : styles['match-history-table__row--pending'])
               }
             >
               <td>{sk.created_at ? new Date(sk.created_at).toLocaleDateString() : 'Unknown'}</td>

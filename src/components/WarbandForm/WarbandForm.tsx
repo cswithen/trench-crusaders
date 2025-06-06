@@ -5,7 +5,10 @@ import { useWarbands } from '../../hooks/useWarbands.js';
 import { useCampaigns } from '../../hooks/useCampaigns.js';
 import { useAuth } from '../../hooks/useAuth';
 import styles from './WarbandForm.module.scss';
+
 import Button from '../Shared/Button';
+import Input from '../Shared/Input';
+import Select from '../Shared/Select';
 
 export default function WarbandForm() {
   const [name, setName] = useState('');
@@ -36,47 +39,48 @@ export default function WarbandForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <input
+      <Input
         type="text"
         placeholder="Warband Name"
         value={name}
         onChange={e => setName(e.target.value)}
         required
+        label="Warband Name"
       />
-      <select
+      <Select
+        label="Campaign"
         value={campaignId}
-        onChange={e => setCampaignId(e.target.value)}
+        onChange={setCampaignId}
+        options={[
+          { value: '', label: 'Select Campaign', disabled: true },
+          ...campaigns.map(c => ({ value: c.id, label: c.name }))
+        ]}
         required
-      >
-        <option value="" disabled>Select Campaign</option>
-        {campaigns.map(c => (
-          <option key={c.id} value={c.id}>{c.name}</option>
-        ))}
-      </select>
-      <select
+      />
+      <Select
+        label="Faction"
         value={factionId ?? ''}
-        onChange={e => {
-          setFactionId(e.target.value || '');
-          setSubfactionId(''); // Reset subfaction if faction changes
+        onChange={val => {
+          setFactionId(val || '');
+          setSubfactionId('');
         }}
+        options={[
+          { value: '', label: 'No Faction' },
+          ...factions.map(f => ({ value: f.id, label: f.name }))
+        ]}
         aria-label="Select Faction"
-      >
-        <option value="">No Faction</option>
-        {factions.map(f => (
-          <option key={f.id} value={f.id}>{f.name}</option>
-        ))}
-      </select>
-      <select
+      />
+      <Select
+        label="Subfaction"
         value={subfactionId ?? ''}
-        onChange={e => setSubfactionId(e.target.value || '')}
+        onChange={val => setSubfactionId(val || '')}
+        options={[
+          { value: '', label: 'No Subfaction' },
+          ...subfactions.map(sf => ({ value: sf.id, label: sf.name }))
+        ]}
         aria-label="Select Subfaction"
         disabled={!factionId}
-      >
-        <option value="">No Subfaction</option>
-        {subfactions.map(sf => (
-          <option key={sf.id} value={sf.id}>{sf.name}</option>
-        ))}
-      </select>
+      />
       <Button type="submit">Create Warband</Button>
     </form>
   );

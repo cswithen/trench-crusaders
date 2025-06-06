@@ -5,6 +5,7 @@ import { useCreateSkirmish } from '../../hooks/useSkirmishes';
 import styles from './SkirmishArena.module.scss';
 import type { Warband } from '../../types/Warband';
 import Button from '../Shared/Button';
+import Select from '../Shared/Select';
 
 const arenaOptions = [
   {
@@ -104,16 +105,17 @@ export default function SkirmishArena({ warbands, onSkirmishResult }: {
         <div className={styles.arena}>
           <div className={styles.side}>
             <h4>Attacker</h4>
-            <select
-              value={left?.id || ''}
-              onChange={e => handleSelect('left', e.target.value)}
+            <Select
+              label="Attacker Warband"
+              value={left?.id ? String(left.id) : ''}
+              onChange={val => handleSelect('left', val)}
+              options={[
+                { value: '', label: 'Select warband...', disabled: true },
+                ...warbands.map(w => ({ value: String(w.id), label: w.name }))
+              ]}
+              required
               aria-label="Select attacker warband"
-            >
-              <option value="">Select warband...</option>
-              {warbands.map(w => (
-                <option key={w.id} value={w.id}>{w.name}</option>
-              ))}
-            </select>
+            />
             <div style={{ marginTop: 8, fontWeight: 'bold', minHeight: 24 }}>
               {left ? left.name : <span style={{ color: '#888' }}>No warband selected</span>}
             </div>
@@ -124,23 +126,21 @@ export default function SkirmishArena({ warbands, onSkirmishResult }: {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: 220 }}>
             <div className={styles.vs}>VS</div>
             <div style={{ margin: '1rem 0', width: '100%' }}>
-              <label htmlFor="arena-select" style={{ fontWeight: 500 }}>Arena Name:</label>
-              <select
-                id="arena-select"
+              <Select
+                label="Arena Name"
                 value={arenaName}
-                onChange={e => setArenaName(e.target.value)}
-                style={{ marginLeft: 8, width: '60%' }}
+                onChange={setArenaName}
+                options={[
+                  { value: '', label: 'Select arena...', disabled: true },
+                  ...arenaOptions.flatMap(group => [
+                    { value: '', label: `--- ${group.label} ---`, disabled: true },
+                    ...group.options.map(opt => ({ value: opt, label: opt }))
+                  ])
+                ]}
+                required
                 aria-label="Select arena name"
-              >
-                <option value="">Select arena...</option>
-                {arenaOptions.map(group => (
-                  <optgroup key={group.label} label={group.label}>
-                    {group.options.map(opt => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
+                style={{ width: '100%' }}
+              />
             </div>
             <Button className={styles.button} onClick={handleLockIn} disabled={!left || !right || !arenaName || createSkirmish.status === 'pending'}>
               Lock In Battle
@@ -150,16 +150,17 @@ export default function SkirmishArena({ warbands, onSkirmishResult }: {
 
           <div className={styles.side}>
             <h4>Defender</h4>
-            <select
-              value={right?.id || ''}
-              onChange={e => handleSelect('right', e.target.value)}
+            <Select
+              label="Defender Warband"
+              value={right?.id ? String(right.id) : ''}
+              onChange={val => handleSelect('right', val)}
+              options={[
+                { value: '', label: 'Select warband...', disabled: true },
+                ...warbands.map(w => ({ value: String(w.id), label: w.name }))
+              ]}
+              required
               aria-label="Select defender warband"
-            >
-              <option value="">Select warband...</option>
-              {warbands.map(w => (
-                <option key={w.id} value={w.id}>{w.name}</option>
-              ))}
-            </select>
+            />
             <div style={{ marginTop: 8, fontWeight: 'bold', minHeight: 24 }}>
               {right ? right.name : <span style={{ color: '#888' }}>No warband selected</span>}
             </div>

@@ -3,11 +3,12 @@
 
 
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useUserCampaigns } from '../hooks/useUserCampaigns';
-import { useLink } from 'react-aria';
-import { Link } from 'react-router-dom';
+import Button from '../components/Shared/Button';
+import Input from '../components/Shared/Input';
+import Link from '../components/Shared/Link';
 import styles from './Profile.module.scss';
 import { useWarbands } from '../hooks/useWarbands';
 
@@ -16,8 +17,6 @@ export default function Profile() {
   const { user, signOut, updateDisplayName } = useAuth();
   const { campaigns, loading } = useUserCampaigns();
   const { warbands } = useWarbands();
-  const ref = useRef<HTMLAnchorElement>(null);
-  const { linkProps } = useLink({ elementType: 'a' }, ref);
   const [editing, setEditing] = useState(false);
   const [displayName, setDisplayName] = useState(user?.user_metadata?.display_name || '');
   const [saving, setSaving] = useState(false);
@@ -43,32 +42,33 @@ export default function Profile() {
         <strong>Display Name:</strong>{' '}
         {editing ? (
           <>
-            <input
+            <Input
               type="text"
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
               disabled={saving}
               style={{ marginRight: 8 }}
+              label="Display Name"
             />
-            <button onClick={handleSave} disabled={saving || !displayName.trim()}>
+            <Button onClick={handleSave} disabled={saving || !displayName.trim()} type="button">
               {saving ? 'Saving...' : 'Save'}
-            </button>
-            <button onClick={() => setEditing(false)} disabled={saving} style={{ marginLeft: 4 }}>
+            </Button>
+            <Button onClick={() => setEditing(false)} disabled={saving} type="button" style={{ marginLeft: 4 }}>
               Cancel
-            </button>
+            </Button>
             {error && <span style={{ color: 'red', marginLeft: 8 }}>{error}</span>}
           </>
         ) : (
           <>
             {user?.user_metadata?.display_name || <em>No display name set</em>}
-            <button onClick={() => setEditing(true)} style={{ marginLeft: 8 }}>
+            <Button onClick={() => setEditing(true)} style={{ marginLeft: 8 }} type="button">
               Edit
-            </button>
+            </Button>
           </>
         )}
       </div>
       <p>Email: {user?.email}</p>
-      <button onClick={signOut}>Sign Out</button>
+      <Button onClick={signOut} type="button">Sign Out</Button>
       <h3>My Campaigns</h3>
       {loading ? (
         <div>Loading campaigns...</div>
@@ -79,8 +79,6 @@ export default function Profile() {
             <li key={campaign.id}>
               <Link
                 to={`/campaigns/${campaign.id}`}
-                {...linkProps}
-                ref={ref}
                 className={styles.link}
               >
                 {campaign.name}
