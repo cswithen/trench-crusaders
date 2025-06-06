@@ -1,5 +1,4 @@
 
-import React from 'react';
 import WarbandCard from '../components/WarbandCard/WarbandCard';
 import { useWarbands } from '../hooks/useWarbands.js';
 import { useParams } from 'react-router-dom';
