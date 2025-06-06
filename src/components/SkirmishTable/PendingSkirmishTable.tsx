@@ -1,8 +1,12 @@
 import React from 'react';
+import ThresholdAndMaxFieldStrength from '../SkirmishArena/ThresholdAndMaxFieldStrength';
 import baseStyles from './SkirmishTableBase.module.scss';
 import styles from './PendingSkirmishTable.module.scss';
 import type { Warband } from '../../types/Warband';
 import { SkirmishTableBase } from './SkirmishTableBase';
+import Button from '../Shared/Button';
+
+
 
 export interface PendingSkirmish {
   id: string;
@@ -14,7 +18,7 @@ export interface PendingSkirmish {
 
 interface Props {
   skirmishes: PendingSkirmish[];
-  warbands: Warband[];
+  warbands: (Warband & { completedMatches?: number })[];
   onMarkWinner: (skirmishId: string, winnerId: string) => void;
   onDelete: (skirmishId: string) => void;
   isMarkingWinner: boolean;
@@ -65,30 +69,51 @@ const PendingSkirmishTable: React.FC<Props> = ({
         const right = warbands.find(w => w.id === sk.right_warband_id);
         return (
           <>
-            <button
-              className={baseStyles['skirmish-list__button'] + ' ' + styles['skirmish-list__button--winner']}
-              aria-label={`Mark ${left?.name || 'Attacker'} as winner`}
-              onClick={() => onMarkWinner(sk.id, sk.left_warband_id)}
-              disabled={isMarkingWinner}
-            >
-              {left?.name || 'Attacker'} Won
-            </button>
-            <button
-              className={baseStyles['skirmish-list__button'] + ' ' + styles['skirmish-list__button--defender']}
-              aria-label={`Mark ${right?.name || 'Defender'} as winner`}
-              onClick={() => onMarkWinner(sk.id, sk.right_warband_id)}
-              disabled={isMarkingWinner}
-            >
-              {right?.name || 'Defender'} Won
-            </button>
-            <button
-              className={baseStyles['skirmish-list__button'] + ' ' + styles['skirmish-list__button--delete']}
-              aria-label="Delete skirmish"
-              onClick={() => onDelete(sk.id)}
-              disabled={isDeleting}
-            >
-              Delete
-            </button>
+            <div className={styles['pending-skirmish-expanded']}>
+              <div className={styles['pending-skirmish-expanded__sides']}>
+                <div className={styles['pending-skirmish-expanded__created']}>
+                  <strong>Created:</strong><br />
+                  {sk.created_at ? new Date(sk.created_at).toLocaleString() : 'Unknown'}
+                </div>
+                <div className={styles['pending-skirmish-expanded__side']}>
+                  <strong>Attacker</strong>
+                  <ThresholdAndMaxFieldStrength completedMatches={left?.completedMatches ?? 0} />
+                </div>
+                <div className={styles['pending-skirmish-expanded__side']}>
+                  <strong>Defender</strong>
+                  <ThresholdAndMaxFieldStrength completedMatches={right?.completedMatches ?? 0} />
+                </div>
+              </div>
+              <div className={styles['pending-skirmish-expanded__actions']}>
+                <Button
+                  variant="primary"
+                  className={styles['skirmish-list__button--winner']}
+                  aria-label={`Mark ${left?.name || 'Attacker'} as winner`}
+                  onClick={() => onMarkWinner(sk.id, sk.left_warband_id)}
+                  disabled={isMarkingWinner}
+                >
+                  {left?.name || 'Attacker'} Won
+                </Button>
+                <Button
+                  variant="secondary"
+                  className={styles['skirmish-list__button--defender']}
+                  aria-label={`Mark ${right?.name || 'Defender'} as winner`}
+                  onClick={() => onMarkWinner(sk.id, sk.right_warband_id)}
+                  disabled={isMarkingWinner}
+                >
+                  {right?.name || 'Defender'} Won
+                </Button>
+                <Button
+                  variant="secondary"
+                  className={styles['skirmish-list__button--delete']}
+                  aria-label="Delete skirmish"
+                  onClick={() => onDelete(sk.id)}
+                  disabled={isDeleting}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
           </>
         );
       }}
