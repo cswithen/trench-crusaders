@@ -1,6 +1,6 @@
 import styles from './Leaderboard.module.scss';
 import type { Warband } from '../../types/Warband';
-import { Link } from 'react-router-dom';
+import Link from '../Shared/Link';
 import { useFactions, useSubfactions } from '../../hooks/useFactions';
 
 export type WarbandStats = {

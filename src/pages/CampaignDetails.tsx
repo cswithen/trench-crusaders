@@ -2,6 +2,7 @@
 import WarbandCard from '../components/WarbandCard/WarbandCard';
 import { useWarbands } from '../hooks/useWarbands.js';
 import { useParams } from 'react-router-dom';
+import Link from '../components/Shared/Link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from '../services/userService';
 import { campaignService } from '../services/campaignService.js';
@@ -150,7 +151,13 @@ export default function CampaignDetails() {
         <div className={styles.list}>
           {campaignWarbands.map(w => (
             <div key={w.id} className={styles['warband-entry']}>
-              <WarbandCard warband={w} />
+              <Link
+                to={`/warbands/${w.id}`}
+                aria-label={`View details for warband ${w.name}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <WarbandCard warband={w} />
+              </Link>
             </div>
           ))}
         </div>

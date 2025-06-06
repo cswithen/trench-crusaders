@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useButton, useLink } from 'react-aria';
+import { useAuth } from '../../hooks/useAuth';
 import styles from './Navbar.module.scss';
 
 function getInitialDarkMode() {
@@ -16,6 +17,7 @@ function getInitialDarkMode() {
 
 export default function Navbar() {
   const [dark, setDark] = useState(getInitialDarkMode);
+  const { user } = useAuth();
 
   useEffect(() => {
     document.body.classList.toggle('tc-dark', dark);
@@ -55,9 +57,9 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <NavLink to="/" label="Home" />
-      <NavLink to="/campaigns" label="Campaigns" />
-      <NavLink to="/warbands" label="Warbands" />
-      <NavLink to="/profile" label="Profile" />
+      {user && <NavLink to="/campaigns" label="Campaigns" />}
+      {user && <NavLink to="/warbands" label="Warbands" />}
+      {user && <NavLink to="/profile" label="Profile" />}
       <button
         {...themeButtonProps}
         ref={themeToggleRef}
