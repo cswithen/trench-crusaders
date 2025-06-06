@@ -1,0 +1,82 @@
+$tc-gap-xs: 0.5rem;
+$tc-gap-sm: 8px;
+$tc-gap-md: 1rem;
+$tc-radius: 4px;
+$tc-btn-padding-y: 0.2em;
+$tc-btn-padding-x: 0.7em;
+$tc-section-padding: 2rem;
+$tc-link: #0070f3;
+$tc-success-bg: #e0ffe0;
+$tc-success-text: #222;
+$tc-success-border: #b2ffb2;
+$tc-info-bg: #e0e0ff;
+$tc-info-text: #222;
+$tc-info-border: #b2b2ff;
+$tc-danger-bg: #ffe0e0;
+$tc-danger-text: #a00;
+$tc-danger-border: #ffb2b2;
+$tc-primary: #2d3142;
+$tc-secondary: #bfc0c0;
+$tc-accent: #ef8354;
+$tc-background: #f5f5f5;
+$tc-text: #22223b;
+$tc-surface-alt: #f7f7f7;
+
+// Dark mode overrides (scoped to .tc-dark body)
+// These are only active when .tc-dark is present on a parent (usually <body>)
+// Use CSS custom properties for runtime theming
+
+:root {
+  --tc-primary: #2d3142;
+  --tc-secondary: #bfc0c0;
+  --tc-accent: #ef8354;
+  --tc-background: #f5f5f5;
+  --tc-text: #22223b;
+  --tc-link: #0070f3;
+  --tc-success-bg: #e0ffe0;
+  --tc-success-text: #222;
+  --tc-success-border: #b2ffb2;
+  --tc-info-bg: #e0e0ff;
+  --tc-info-text: #222;
+  --tc-info-border: #b2b2ff;
+  --tc-danger-bg: #ffe0e0;
+  --tc-danger-text: #a00;
+  --tc-danger-border: #ffb2b2;
+  --tc-surface-alt: #f7f7f7;
+}
+
+.tc-dark {
+  --tc-primary: #181a20;
+  --tc-secondary: #232634;
+  --tc-accent: #ef8354;
+  --tc-background: #181a20;
+  --tc-text: #f5f5f5;
+  --tc-link: #7abfff;
+  --tc-success-bg: #223322;
+  --tc-success-text: #b2ffb2;
+  --tc-success-border: #3a5f3a;
+  --tc-info-bg: #232634;
+  --tc-info-text: #b2b2ff;
+  --tc-info-border: #3a3a5f;
+  --tc-danger-bg: #3a2222;
+  --tc-danger-text: #ffb2b2;
+  --tc-danger-border: #5f3a3a;
+  --tc-surface-alt: #232634;
+}
+
+$tc-primary: var(--tc-primary);
+$tc-secondary: var(--tc-secondary);
+$tc-accent: var(--tc-accent);
+$tc-background: var(--tc-background);
+$tc-text: var(--tc-text);
+$tc-link: var(--tc-link);
+$tc-success-bg: var(--tc-success-bg);
+$tc-success-text: var(--tc-success-text);
+$tc-success-border: var(--tc-success-border);
+$tc-info-bg: var(--tc-info-bg);
+$tc-info-text: var(--tc-info-text);
+$tc-info-border: var(--tc-info-border);
+$tc-danger-bg: var(--tc-danger-bg);
+$tc-danger-text: var(--tc-danger-text);
+$tc-danger-border: var(--tc-danger-border);
+$tc-surface-alt: var(--tc-surface-alt);

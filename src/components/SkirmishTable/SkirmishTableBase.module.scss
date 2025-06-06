@@ -1,0 +1,38 @@
+@use '../../styles/variables.scss' as *;
+.skirmish-table__expand-btn {
+  min-width: 32px;
+  background: none;
+  border: none;
+  color: $tc-link;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+
+.skirmish-table__expanded {
+  background: $tc-surface-alt;
+  color: $tc-text;
+  font-size: 0.95em;
+  transition: background 0.2s;
+}
+
+.skirmish-table__expanded-actions {
+  margin-top: 0;
+  text-align: left;
+}
+
+.skirmish-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $tc-background;
+  color: $tc-text;
+  border-radius: $tc-radius;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.2s, color 0.2s;
+}
+
+.skirmish-table__row {
+  transition: background 0.2s;
+}

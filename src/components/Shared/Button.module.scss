@@ -1,0 +1,16 @@
+@use '../../styles/variables.scss' as *;
+
+.button {
+  background: $tc-accent;
+  color: #fff;
+  border: none;
+  border-radius: $tc-radius;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s;
+  &:disabled {
+    background: $tc-secondary;
+    cursor: not-allowed;
+  }
+}

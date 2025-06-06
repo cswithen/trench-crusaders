@@ -1,0 +1,33 @@
+@use '../../styles/variables.scss' as *;
+
+
+.leaderboard {
+  margin: 2rem 0;
+  background: $tc-background;
+  border-radius: $tc-radius;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  color: $tc-text;
+  transition: background 0.2s, color 0.2s;
+}
+
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+th {
+  background: $tc-secondary;
+  color: $tc-text;
+  transition: background 0.2s, color 0.2s;
+}
+tr:nth-child(even) {
+  background: $tc-background;
+  transition: background 0.2s;
+}

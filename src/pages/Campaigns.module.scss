@@ -1,0 +1,75 @@
+@use '../styles/variables.scss' as *;
+.skirmish-table__expand-btn {
+  min-width: 32px;
+}
+
+.skirmish-table__expanded-actions {
+  margin-top: 0;
+  text-align: left;
+}
+.skirmish-table__expanded {
+  background: $tc-surface-alt;
+  color: $tc-text;
+  font-size: 0.95em;
+  transition: background 0.2s;
+}
+
+.skirmish-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.skirmish-list__item {
+  display: flex;
+  align-items: center;
+  gap: $tc-gap-sm;
+  margin-bottom: $tc-gap-xs;
+}
+
+.skirmish-list__button {
+  text-decoration: underline;
+  background: none;
+  border: none;
+  color: $tc-link;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.skirmish-list__button--winner {
+  background: $tc-success-bg;
+  color: $tc-success-text;
+  border: 1px solid $tc-success-border;
+  border-radius: $tc-radius;
+  padding: $tc-btn-padding-y $tc-btn-padding-x;
+  text-decoration: none;
+}
+.skirmish-list__button--defender {
+  background: $tc-info-bg;
+  color: $tc-info-text;
+  border: 1px solid $tc-info-border;
+  border-radius: $tc-radius;
+  padding: $tc-btn-padding-y $tc-btn-padding-x;
+  text-decoration: none;
+}
+.skirmish-list__button--delete {
+  background: $tc-danger-bg;
+  color: $tc-danger-text;
+  border: 1px solid $tc-danger-border;
+  border-radius: $tc-radius;
+  padding: $tc-btn-padding-y $tc-btn-padding-x;
+  text-decoration: none;
+}
+
+.campaigns {
+  padding: $tc-section-padding;
+  background: $tc-background;
+  color: $tc-text;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $tc-gap-md;
+}

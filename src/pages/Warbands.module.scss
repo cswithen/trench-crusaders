@@ -1,0 +1,53 @@
+@use '../styles/variables.scss' as *;
+
+.warbands {
+  padding: 2rem;
+  background: $tc-background;
+  color: $tc-text;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.warband-entry {
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+}
+
+.warband-entry > a {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.warband-entry > a > .card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
+.warband-meta {
+  font-size: 0.95em;
+  color: $tc-secondary;
+  margin-top: 4px;
+  display: flex;
+  gap: 0.5em;
+}
+
+.warband-meta__faction {
+  font-weight: 500;
+}
+
+.warband-meta__subfaction {
+  color: $tc-info-text;
+}
