@@ -23,6 +23,9 @@ interface Props {
     isDeleting: boolean;
 }
 
+type SortKey = 'created_at' | 'arena' | 'attacker' | 'defender';
+type SortOrder = 'asc' | 'desc';
+
 const PendingSkirmishTable: React.FC<Props> = ({
     skirmishes,
     warbands,
@@ -31,13 +34,140 @@ const PendingSkirmishTable: React.FC<Props> = ({
     isMarkingWinner,
     isDeleting,
 }) => {
+    const [sortKey, setSortKey] = React.useState<SortKey>('created_at');
+    const [sortOrder, setSortOrder] = React.useState<SortOrder>('desc');
+
+    const handleSort = (key: SortKey) => {
+        if (sortKey === key) {
+            setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+        } else {
+            setSortKey(key);
+            setSortOrder(key === 'created_at' ? 'desc' : 'asc');
+        }
+    };
+
+    const getAriaSort = (
+        key: SortKey
+    ): 'none' | 'ascending' | 'descending' | 'other' | undefined => {
+        if (sortKey !== key) return 'none';
+        if (sortOrder === 'asc') return 'ascending';
+        if (sortOrder === 'desc') return 'descending';
+        return 'none';
+    };
+
+    const sortedSkirmishes = React.useMemo(() => {
+        return [...skirmishes].sort((a, b) => {
+            let aValue: string | number = '';
+            let bValue: string | number = '';
+            switch (sortKey) {
+                case 'created_at':
+                    aValue = a.created_at || '';
+                    bValue = b.created_at || '';
+                    break;
+                case 'arena':
+                    aValue = (a.arena_name || '').toLowerCase();
+                    bValue = (b.arena_name || '').toLowerCase();
+                    break;
+                case 'attacker': {
+                    const leftA =
+                        warbands.find((w) => w.id === a.left_warband_id)
+                            ?.name || '';
+                    const leftB =
+                        warbands.find((w) => w.id === b.left_warband_id)
+                            ?.name || '';
+                    aValue = leftA.toLowerCase();
+                    bValue = leftB.toLowerCase();
+                    break;
+                }
+                case 'defender': {
+                    const rightA =
+                        warbands.find((w) => w.id === a.right_warband_id)
+                            ?.name || '';
+                    const rightB =
+                        warbands.find((w) => w.id === b.right_warband_id)
+                            ?.name || '';
+                    aValue = rightA.toLowerCase();
+                    bValue = rightB.toLowerCase();
+                    break;
+                }
+                default:
+                    break;
+            }
+            if (sortKey === 'created_at') {
+                return sortOrder === 'asc'
+                    ? String(aValue).localeCompare(String(bValue))
+                    : String(bValue).localeCompare(String(aValue));
+            }
+            if (typeof aValue === 'string' && typeof bValue === 'string') {
+                return sortOrder === 'asc'
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue);
+            }
+            return 0;
+        });
+    }, [skirmishes, sortKey, sortOrder, warbands]);
+
+    const renderSortIndicator = (key: SortKey) => {
+        if (sortKey !== key) return null;
+        return sortOrder === 'asc' ? ' ▲' : ' ▼';
+    };
+
     return (
         <SkirmishTableBase
-            skirmishes={skirmishes}
+            skirmishes={sortedSkirmishes}
             columns={[
-                { key: 'arena', label: 'Arena' },
-                { key: 'attacker', label: 'Attacker' },
-                { key: 'defender', label: 'Defender' },
+                {
+                    key: 'arena',
+                    label: (
+                        <button
+                            type="button"
+                            className={baseStyles['sort-header']}
+                            onClick={() => handleSort('arena')}
+                            aria-sort={getAriaSort('arena')}
+                        >
+                            Arena{renderSortIndicator('arena')}
+                        </button>
+                    ),
+                },
+                {
+                    key: 'attacker',
+                    label: (
+                        <button
+                            type="button"
+                            className={baseStyles['sort-header']}
+                            onClick={() => handleSort('attacker')}
+                            aria-sort={getAriaSort('attacker')}
+                        >
+                            Attacker{renderSortIndicator('attacker')}
+                        </button>
+                    ),
+                },
+                {
+                    key: 'defender',
+                    label: (
+                        <button
+                            type="button"
+                            className={baseStyles['sort-header']}
+                            onClick={() => handleSort('defender')}
+                            aria-sort={getAriaSort('defender')}
+                        >
+                            Defender{renderSortIndicator('defender')}
+                        </button>
+                    ),
+                },
+                {
+                    key: 'created_at',
+                    label: (
+                        <button
+                            type="button"
+                            className={baseStyles['sort-header']}
+                            onClick={() => handleSort('created_at')}
+                            aria-sort={getAriaSort('created_at')}
+                        >
+                            Created{renderSortIndicator('created_at')}
+                        </button>
+                    ),
+                },
             ]}
             getRowKey={(sk) => sk.id}
             renderRow={(sk, expanded, toggleExpand) => {
@@ -72,6 +202,11 @@ const PendingSkirmishTable: React.FC<Props> = ({
                         <td>{sk.arena_name || 'Unknown Arena'}</td>
                         <td>{left?.name || sk.left_warband_id}</td>
                         <td>{right?.name || sk.right_warband_id}</td>
+                        <td>
+                            {sk.created_at
+                                ? new Date(sk.created_at).toLocaleString()
+                                : 'Unknown'}
+                        </td>
                     </tr>
                 );
             }}

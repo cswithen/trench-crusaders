@@ -3,7 +3,7 @@ import styles from './SkirmishTableBase.module.scss';
 
 export interface SkirmishTableBaseProps<T> {
   skirmishes: T[];
-  columns: Array<{ key: string; label: string }>;
+  columns: Array<{ key: string; label: React.ReactNode }>;
   renderRow: (skirmish: T, expanded: boolean, toggleExpand: () => void) => React.ReactNode;
   renderExpanded?: (skirmish: T) => React.ReactNode;
   getRowKey: (skirmish: T) => string;
