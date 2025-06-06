@@ -11,36 +11,38 @@ const arenaOptions = [
     {
         label: 'Early Campaign (Battles 1-3)',
         options: [
-            'Claim No Man’s Land',
-            'Hunt for Heroes',
-            'Hill 223',
-            'Relic Hunt',
-            'Supply Raid',
+            { value: 'Claim No Man’s Land', label: 'Claim No Man’s Land' },
+            { value: 'Hunt for Heroes-early', label: 'Hunt for Heroes' },
+            { value: 'Hill 223', label: 'Hill 223' },
+            { value: 'Relic Hunt', label: 'Relic Hunt' },
+            { value: 'Supply Raid', label: 'Supply Raid' },
         ],
     },
     {
         label: 'Mid-Campaign (Battles 4-9)',
         options: [
-            'Hunt for Heroes',
-            'Armoured Train',
-            'Storming the Shores',
-            'Claim No Man’s Land',
-            'Dragon Hunt',
+            { value: 'Hunt for Heroes-mid', label: 'Hunt for Heroes' },
+            { value: 'Armoured Train', label: 'Armoured Train' },
+            { value: 'Storming the Shores-mid', label: 'Storming the Shores' },
+            { value: 'Claim No Man’s Land-mid', label: 'Claim No Man’s Land' },
+            { value: 'Dragon Hunt-mid', label: 'Dragon Hunt' },
         ],
     },
     {
         label: 'Endgame (Battles 9-11)',
         options: [
-            'Trench Warfare',
-            'Dragon Hunt',
-            'From Below',
-            'Fields of Glory',
-            'Storming the Shores',
+            { value: 'Trench Warfare', label: 'Trench Warfare' },
+            { value: 'Dragon Hunt-end', label: 'Dragon Hunt' },
+            { value: 'From Below', label: 'From Below' },
+            { value: 'Fields of Glory', label: 'Fields of Glory' },
+            { value: 'Storming the Shores-end', label: 'Storming the Shores' },
         ],
     },
     {
         label: 'Final Battle (Battle 12)',
-        options: ['Great War'],
+        options: [
+            { value: 'Great War', label: 'Great War' },
+        ],
     },
 ];
 
@@ -51,7 +53,7 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
     const createSkirmish = useCreateSkirmish();
     const [left, setLeft] = useState<WarbandWithMatches | null>(null);
     const [right, setRight] = useState<WarbandWithMatches | null>(null);
-    const [arenaName, setArenaName] = useState<string>('');
+    const [arenaName, setArenaName] = useState<string>('__select_arena__');
     const [showForm, setShowForm] = useState(false);
 
     function handleSelect(side: 'left' | 'right', id: string) {
@@ -67,13 +69,23 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
 
     function handleLockIn() {
         if (!campaignId || !left || !right || !arenaName) return;
+        // Find the selected option's label for display, but send the original label to the backend
+        let backendArenaName = arenaName;
+        // Find the option in arenaOptions
+        for (const group of arenaOptions) {
+            const found = group.options.find(opt => opt.value === arenaName);
+            if (found) {
+                backendArenaName = found.label;
+                break;
+            }
+        }
         createSkirmish.mutate(
             {
                 campaign_id: campaignId,
                 left_warband_id: left.id,
                 right_warband_id: right.id,
                 winner_id: null,
-                arena_name: arenaName,
+                arena_name: backendArenaName,
             },
             {
                 onSuccess: () => {
@@ -120,7 +132,7 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                         />
                         <div className={styles['threshold-fields']} style={{ width: '100%' }}>
                           <ThresholdAndMaxFieldStrength
-                            completedMatches={left?.completedMatches ?? 0}
+                            completedMatches={left?.completedMatches ?? undefined}
                           />
                         </div>
                     </div>
@@ -128,32 +140,29 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                     <div className={styles.centerColumn}>
                         <div className={styles.vs}>VS</div>
                         <div className={styles.arenaSelectWrapper}>
-                            <Select
-                                label="Arena Name"
-                                value={arenaName}
-                                onChange={setArenaName}
-                                options={[
+                        <Select
+                            label="Arena Name"
+                            value={arenaName}
+                            onChange={setArenaName}
+                            options={[
+                                {
+                                    value: '__select_arena__',
+                                    label: 'Select arena...',
+                                    disabled: true,
+                                },
+                                ...arenaOptions.flatMap((group, groupIdx) => [
                                     {
-                                        value: '',
-                                        label: 'Select arena...',
+                                        value: `__group_${groupIdx}__`,
+                                        label: `--- ${group.label} ---`,
                                         disabled: true,
                                     },
-                                    ...arenaOptions.flatMap((group) => [
-                                        {
-                                            value: '',
-                                            label: `--- ${group.label} ---`,
-                                            disabled: true,
-                                        },
-                                        ...group.options.map((opt) => ({
-                                            value: opt,
-                                            label: opt,
-                                        })),
-                                    ]),
-                                ]}
-                                required
-                                aria-label="Select arena name"
-                                // width handled by SCSS
-                            />
+                                    ...group.options,
+                                ]),
+                            ]}
+                            required
+                            aria-label="Select arena name"
+                            // width handled by SCSS
+                        />
                         </div>
                         <Button
                             className={styles.button}
@@ -162,6 +171,7 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                                 !left ||
                                 !right ||
                                 !arenaName ||
+                                arenaName === '__select_arena__' ||
                                 createSkirmish.status === 'pending'
                             }
                         >
@@ -201,7 +211,7 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                         />
                         <div className={styles['threshold-fields']} style={{ width: '100%' }}>
                           <ThresholdAndMaxFieldStrength
-                            completedMatches={right?.completedMatches ?? 0}
+                            completedMatches={right?.completedMatches ?? undefined}
                           />
                         </div>
                     </div>

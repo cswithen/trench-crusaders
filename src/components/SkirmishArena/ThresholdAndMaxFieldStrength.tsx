@@ -19,7 +19,30 @@ function getBattleInfo(completedMatches: number) {
   return battleData.find(b => b.battle === battleNum) ?? battleData[battleData.length - 1];
 }
 
-export default function ThresholdAndMaxFieldStrength({ completedMatches }: { completedMatches: number }) {
+export default function ThresholdAndMaxFieldStrength({ completedMatches }: { completedMatches?: number }) {
+  if (completedMatches === undefined || completedMatches === null) {
+    return (
+      <div className="threshold-fields">
+        <div>
+          <strong>Threshold:</strong> --
+        </div>
+        <div>
+          <strong>Max Field Strength:</strong> --
+        </div>
+        <div style={{ fontSize: '0.95em', color: '#888', marginTop: 4 }}>
+          <span
+            tabIndex={0}
+            aria-label="Threshold and Max Field Strength values are based on completed matches only."
+            title="Threshold and Max Field Strength values are based on completed matches only."
+            role="img"
+            onMouseDown={e => e.preventDefault()}
+          >
+            ℹ️
+          </span>
+        </div>
+      </div>
+    );
+  }
   const battleInfo = getBattleInfo(completedMatches);
   return (
     <div className="threshold-fields">

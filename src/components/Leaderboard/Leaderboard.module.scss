@@ -1,18 +1,5 @@
 @use '../../styles/variables.scss' as *;
 
-
-.leaderboard {
-  margin: 2rem 0;
-  background: $tc-background;
-  border-radius: $tc-radius;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  color: $tc-text;
-  transition: background 0.2s, color 0.2s;
-}
-
-
-
 .table {
   width: 100%;
   border-collapse: collapse;

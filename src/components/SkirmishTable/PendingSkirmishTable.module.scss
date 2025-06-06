@@ -1,26 +1,19 @@
 @use '../../styles/variables.scss' as *;
 
+.pending-skirmish-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: $tc-gap-md;
+}
 
-.skirmish-list__button--winner {
-  background: $tc-success-bg;
-  color: $tc-success-text;
-  border: 1px solid $tc-success-border;
-  border-radius: $tc-radius;
-  margin-right: 0.5em;
-  padding: $tc-btn-padding-y $tc-btn-padding-x;
+.pending-skirmish-expanded__sides {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $tc-gap-md;
+  justify-items: center;
 }
-.skirmish-list__button--defender {
-  background: $tc-info-bg;
-  color: $tc-info-text;
-  border: 1px solid $tc-info-border;
-  border-radius: $tc-radius;
-  margin-right: 0.5em;
-  padding: $tc-btn-padding-y $tc-btn-padding-x;
-}
-.skirmish-list__button--delete {
-  background: $tc-danger-bg;
-  color: $tc-danger-text;
-  border: 1px solid $tc-danger-border;
-  border-radius: $tc-radius;
-  padding: $tc-btn-padding-y $tc-btn-padding-x;
+
+.pending-skirmish-expanded__actions {
+  display: flex;
+  gap: $tc-gap-sm;
 }

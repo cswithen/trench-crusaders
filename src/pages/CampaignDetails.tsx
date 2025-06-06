@@ -1,6 +1,8 @@
+// import { useEffect } from 'react';
 import { useWarbands } from '../hooks/useWarbands.js';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { userService } from '../services/userService';
 import { campaignService } from '../services/campaignService.js';
 import { oathService } from '../services/oathService.js';
@@ -15,8 +17,11 @@ import { skirmishService } from '../services/skirmishService';
 import PendingSkirmishTable from '../components/SkirmishTable/PendingSkirmishTable';
 import CompletedSkirmishTable from '../components/SkirmishTable/CompletedSkirmishTable';
 
+
+
 export default function CampaignDetails() {
     const { id } = useParams<{ id: string }>();
+    const queryClient = useQueryClient();
     const { data: campaign, isLoading: loadingCampaign } =
         useQuery<Campaign | null>({
             queryKey: ['campaign', id],
@@ -26,7 +31,23 @@ export default function CampaignDetails() {
                 return data;
             },
             enabled: !!id,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: true,
         });
+
+    // Real-time subscription for this campaign
+    useEffect(() => {
+        if (!id) return;
+        const sub = campaignService.subscribe((payload: unknown) => {
+            const p = payload as { new?: { id: string }; old?: { id: string } };
+            if (p?.new?.id === id || p?.old?.id === id) {
+                queryClient.invalidateQueries({ queryKey: ['campaign', id] });
+            }
+        });
+        return () => {
+            if (sub && typeof sub.unsubscribe === 'function') sub.unsubscribe();
+        };
+    }, [id, queryClient]);
     const { data: oaths = [], isLoading: loadingOaths } = useQuery<Oath[]>({
         queryKey: ['oaths', id],
         queryFn: () => oathService.getByCampaign(id!),
@@ -54,7 +75,6 @@ export default function CampaignDetails() {
     const completedSkirmishes = skirmishes.filter((s) => !!s.winner_id);
 
     // Mutations for marking winner and deleting skirmish
-    const queryClient = useQueryClient();
     const updateSkirmish = useMutation({
         mutationFn: async ({
             id,
