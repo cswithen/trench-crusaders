@@ -1,18 +1,20 @@
 .link {
-  color: var(--color-link, #0070f3);
-  text-decoration: none;
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
-  cursor: pointer;
+    color: var(--color-link, #0070f3);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition:
+        color 0.2s,
+        border-color 0.2s;
+    cursor: pointer;
 }
 .link:hover,
 .link:focus {
-  color: var(--color-link-hover, #0051a3);
-  border-bottom: 1px solid var(--color-link-hover, #0051a3);
-  outline: none;
+    color: var(--color-link-hover, #0051a3);
+    border-bottom: 1px solid var(--color-link-hover, #0051a3);
+    outline: none;
 }
-.link[aria-current="page"] {
-  color: var(--color-accent, #ef8354);
-  border-bottom: 2px solid var(--color-accent, #ef8354);
+.link[aria-current='page'] {
+    color: var(--color-accent, #ef8354);
+    border-bottom: 2px solid var(--color-accent, #ef8354);
 }

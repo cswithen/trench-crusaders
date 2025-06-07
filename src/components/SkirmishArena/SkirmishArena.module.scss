@@ -1,42 +1,42 @@
 .threshold-fields {
-  margin: 1rem 0;
-  text-align: center;
+    margin: 1rem 0;
+    text-align: center;
 }
 .centerColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
 }
 
 .arenaSelectWrapper {
-  margin: 1rem 0;
-  width: 100%;
+    margin: 1rem 0;
+    width: 100%;
 }
 
 .cancelButton {
-  margin-top: 8px;
+    margin-top: 8px;
 }
 .arena {
-  display: flex;
-  gap: 2rem;
-  margin: 2rem 0;
-  justify-content: center;
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    justify-content: center;
 }
 .side {
-  flex: 1;
-  min-width: 200px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  padding: 1rem;
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    flex: 1;
+    min-width: 200px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .vs {
-  font-size: 2rem;
-  align-self: center;
-  margin: 0 1rem;
+    font-size: 2rem;
+    align-self: center;
+    margin: 0 1rem;
 }

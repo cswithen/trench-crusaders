@@ -25,37 +25,40 @@ A campaign management and leaderboard web app for narrative tabletop wargaming, 
 ## Development
 
 ### Prerequisites
+
 - Node.js (18+ recommended)
 - Yarn or npm
 - Supabase project (see below)
 
 ### Setup
+
 1. Clone the repo:
-   ```sh
-   git clone https://github.com/your-org/trench-crusade.git
-   cd trench-crusade
-   ```
+    ```sh
+    git clone https://github.com/your-org/trench-crusade.git
+    cd trench-crusade
+    ```
 2. Install dependencies:
-   ```sh
-   yarn install
-   # or
-   npm install
-   ```
+    ```sh
+    yarn install
+    # or
+    npm install
+    ```
 3. Copy `.env.example` to `.env` and set your Supabase keys:
-   ```sh
-   cp .env.example .env
-   # Edit .env with your Supabase project URL and anon/public key
-   ```
+    ```sh
+    cp .env.example .env
+    # Edit .env with your Supabase project URL and anon/public key
+    ```
 4. Start the dev server:
-   ```sh
-   yarn dev
-   # or
-   npm run dev
-   ```
+    ```sh
+    yarn dev
+    # or
+    npm run dev
+    ```
 
 ### Supabase Setup
+
 - Create a Supabase project and configure the following tables:
-  - `campaigns`, `warbands`, `skirmishes`, `profiles`, `factions`, `subfactions`, `oaths`, `whitelist`
+    - `campaigns`, `warbands`, `skirmishes`, `profiles`, `factions`, `subfactions`, `oaths`, `whitelist`
 - Set up RLS (Row Level Security) and policies as needed (see `supabase_profiles.sql`).
 
 ## Project Structure
@@ -68,6 +71,7 @@ A campaign management and leaderboard web app for narrative tabletop wargaming, 
 - `src/styles/` — Global and variable SCSS files
 
 ## Accessibility & Theming
+
 - All interactive elements use React-Aria hooks/components for accessibility.
 - All styles use SCSS variables and BEM naming, with dark/light mode support via CSS custom properties.
 
@@ -78,5 +82,8 @@ MIT
 ---
 
 _This project is a narrative campaign tracker for Trench Crusade and similar wargames. For questions or contributions, open an issue or pull request!_
-    ...reactDom.configs.recommended.rules,
+...reactDom.configs.recommended.rules,
+
+```
+
 ```

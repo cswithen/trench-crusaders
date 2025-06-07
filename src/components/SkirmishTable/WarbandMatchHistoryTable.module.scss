@@ -1,35 +1,35 @@
 @use '../../styles/variables.scss' as *;
 
 .match-history-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: $tc-background;
-  color: $tc-text;
-  border-radius: $tc-radius;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-top: 1rem;
-  font-size: 0.98em;
+    width: 100%;
+    border-collapse: collapse;
+    background: $tc-background;
+    color: $tc-text;
+    border-radius: $tc-radius;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 1rem;
+    font-size: 0.98em;
 }
 
 .match-history-table th,
 .match-history-table td {
-  padding: 0.5em 1em;
-  text-align: left;
+    padding: 0.5em 1em;
+    text-align: left;
 }
 
 .match-history-table__row {
-  transition: background 0.2s;
+    transition: background 0.2s;
 }
 
 .match-history-table .match-history-table__row--win td {
-  background: $tc-success-bg;
-  color: $tc-success-text;
+    background: $tc-success-bg;
+    color: $tc-success-text;
 }
 .match-history-table .match-history-table__row--loss td {
-  background: $tc-danger-bg;
-  color: $tc-danger-text;
+    background: $tc-danger-bg;
+    color: $tc-danger-text;
 }
 .match-history-table .match-history-table__row--pending td {
-  background: $tc-surface-alt;
-  color: $tc-text;
+    background: $tc-surface-alt;
+    color: $tc-text;
 }

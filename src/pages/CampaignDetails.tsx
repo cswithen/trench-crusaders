@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import { useWarbands } from '../hooks/useWarbands.js';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -17,8 +16,6 @@ import { skirmishService } from '../services/skirmishService';
 import PendingSkirmishTable from '../components/SkirmishTable/PendingSkirmishTable';
 import CompletedSkirmishTable from '../components/SkirmishTable/CompletedSkirmishTable';
 
-
-
 export default function CampaignDetails() {
     const { id } = useParams<{ id: string }>();
     const queryClient = useQueryClient();
@@ -35,7 +32,6 @@ export default function CampaignDetails() {
             refetchOnReconnect: true,
         });
 
-    // Real-time subscription for this campaign
     useEffect(() => {
         if (!id) return;
         const sub = campaignService.subscribe((payload: unknown) => {
@@ -56,7 +52,6 @@ export default function CampaignDetails() {
     const { warbands = [] } = useWarbands();
     const campaignWarbands = warbands.filter((w) => w.campaign_id === id);
 
-    // Fetch all participant profiles for this campaign
     const participantIds: string[] = Array.from(
         new Set(oaths.map((o) => o.user_id))
     );
@@ -66,15 +61,12 @@ export default function CampaignDetails() {
         enabled: participantIds.length > 0,
     });
 
-    // Skirmish data
     const { data: skirmishes = [], isLoading: loadingSkirmishes } =
         useSkirmishes(id!);
 
-    // Split skirmishes into pending and completed
     const pendingSkirmishes = skirmishes.filter((s) => !s.winner_id);
     const completedSkirmishes = skirmishes.filter((s) => !!s.winner_id);
 
-    // Mutations for marking winner and deleting skirmish
     const updateSkirmish = useMutation({
         mutationFn: async ({
             id,
@@ -111,8 +103,6 @@ export default function CampaignDetails() {
         return <div>Loading...</div>;
     if (!campaign) return <div>Campaign not found.</div>;
 
-    // Calculate leaderboard stats from skirmishes
-    // Also build a map of warbandId -> completed matches for SkirmishArena
     const leaderboardStats: WarbandStats[] = campaignWarbands.map((w) => {
         const completed = skirmishes.filter(
             (sk) =>
@@ -134,13 +124,11 @@ export default function CampaignDetails() {
             pending: pending.length,
         } as WarbandStats & { pending: number };
     });
-    // Map warbandId -> completed matches
     const warbandMatchesMap: Record<string, number> = {};
-    leaderboardStats.forEach(stat => {
+    leaderboardStats.forEach((stat) => {
         warbandMatchesMap[stat.warband.id] = stat.matches;
     });
-    // Prepare warbands with completedMatches property for SkirmishArena
-    const warbandsWithMatches = campaignWarbands.map(w => ({
+    const warbandsWithMatches = campaignWarbands.map((w) => ({
         ...w,
         completedMatches: warbandMatchesMap[w.id] || 0,
     }));
@@ -153,22 +141,20 @@ export default function CampaignDetails() {
 
             <h2>Skirmishes</h2>
 
-            <SkirmishArena
-                warbands={warbandsWithMatches}
-            />
+            <SkirmishArena warbands={warbandsWithMatches} />
 
             <h3>Pending Skirmishes</h3>
             {pendingSkirmishes.length === 0 ? (
                 <p>No pending skirmishes.</p>
             ) : (
-            <PendingSkirmishTable
-                skirmishes={pendingSkirmishes}
-                warbands={warbandsWithMatches}
-                onMarkWinner={handleMarkWinner}
-                onDelete={handleDeleteSkirmish}
-                isMarkingWinner={updateSkirmish.isPending}
-                isDeleting={deleteSkirmish.isPending}
-            />
+                <PendingSkirmishTable
+                    skirmishes={pendingSkirmishes}
+                    warbands={warbandsWithMatches}
+                    onMarkWinner={handleMarkWinner}
+                    onDelete={handleDeleteSkirmish}
+                    isMarkingWinner={updateSkirmish.isPending}
+                    isDeleting={deleteSkirmish.isPending}
+                />
             )}
 
             <h3>Completed Skirmishes</h3>

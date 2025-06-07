@@ -32,7 +32,9 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
     };
 
     // Map internal sort order to ARIA-compliant values
-    const getAriaSort = (key: SortKey): 'none' | 'ascending' | 'descending' | 'other' | undefined => {
+    const getAriaSort = (
+        key: SortKey
+    ): 'none' | 'ascending' | 'descending' | 'other' | undefined => {
         if (sortKey !== key) return 'none';
         if (sortOrder === 'asc') return 'ascending';
         if (sortOrder === 'desc') return 'descending';
@@ -50,9 +52,13 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                     break;
                 case 'faction':
                     aValue =
-                        factions.find((f) => f.id === a.warband.faction_id)?.name?.toLowerCase() || '';
+                        factions
+                            .find((f) => f.id === a.warband.faction_id)
+                            ?.name?.toLowerCase() || '';
                     bValue =
-                        factions.find((f) => f.id === b.warband.faction_id)?.name?.toLowerCase() || '';
+                        factions
+                            .find((f) => f.id === b.warband.faction_id)
+                            ?.name?.toLowerCase() || '';
                     break;
                 case 'wins':
                     aValue = a.wins;
@@ -73,7 +79,10 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                 return sortOrder === 'asc'
                     ? aValue.localeCompare(bValue)
                     : bValue.localeCompare(aValue);
-            } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+            } else if (
+                typeof aValue === 'number' &&
+                typeof bValue === 'number'
+            ) {
                 return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
             }
             return 0;
@@ -108,7 +117,8 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                                 onClick={() => handleSort('faction')}
                                 aria-sort={getAriaSort('faction')}
                             >
-                                Faction / Subfaction{renderSortIndicator('faction')}
+                                Faction / Subfaction
+                                {renderSortIndicator('faction')}
                             </button>
                         </th>
                         <th>

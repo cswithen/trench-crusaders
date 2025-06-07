@@ -40,15 +40,16 @@ const arenaOptions = [
     },
     {
         label: 'Final Battle (Battle 12)',
-        options: [
-            { value: 'Great War', label: 'Great War' },
-        ],
+        options: [{ value: 'Great War', label: 'Great War' }],
     },
 ];
 
-// Accepts warbands with completedMatches property
 type WarbandWithMatches = Warband & { completedMatches?: number };
-export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatches[] }) {
+export default function SkirmishArena({
+    warbands,
+}: {
+    warbands: WarbandWithMatches[];
+}) {
     const { id: campaignId } = useParams<{ id: string }>();
     const createSkirmish = useCreateSkirmish();
     const [left, setLeft] = useState<WarbandWithMatches | null>(null);
@@ -69,11 +70,9 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
 
     function handleLockIn() {
         if (!campaignId || !left || !right || !arenaName) return;
-        // Find the selected option's label for display, but send the original label to the backend
         let backendArenaName = arenaName;
-        // Find the option in arenaOptions
         for (const group of arenaOptions) {
-            const found = group.options.find(opt => opt.value === arenaName);
+            const found = group.options.find((opt) => opt.value === arenaName);
             if (found) {
                 backendArenaName = found.label;
                 break;
@@ -130,39 +129,45 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                             required
                             aria-label="Select attacker warband"
                         />
-                        <div className={styles['threshold-fields']} style={{ width: '100%' }}>
-                          <ThresholdAndMaxFieldStrength
-                            completedMatches={left?.completedMatches ?? undefined}
-                          />
+                        <div
+                            className={styles['threshold-fields']}
+                            style={{ width: '100%' }}
+                        >
+                            <ThresholdAndMaxFieldStrength
+                                completedMatches={
+                                    left?.completedMatches ?? undefined
+                                }
+                            />
                         </div>
                     </div>
 
                     <div className={styles.centerColumn}>
                         <div className={styles.vs}>VS</div>
                         <div className={styles.arenaSelectWrapper}>
-                        <Select
-                            label="Arena Name"
-                            value={arenaName}
-                            onChange={setArenaName}
-                            options={[
-                                {
-                                    value: '__select_arena__',
-                                    label: 'Select arena...',
-                                    disabled: true,
-                                },
-                                ...arenaOptions.flatMap((group, groupIdx) => [
+                            <Select
+                                label="Arena Name"
+                                value={arenaName}
+                                onChange={setArenaName}
+                                options={[
                                     {
-                                        value: `__group_${groupIdx}__`,
-                                        label: `--- ${group.label} ---`,
+                                        value: '__select_arena__',
+                                        label: 'Select arena...',
                                         disabled: true,
                                     },
-                                    ...group.options,
-                                ]),
-                            ]}
-                            required
-                            aria-label="Select arena name"
-                            // width handled by SCSS
-                        />
+                                    ...arenaOptions.flatMap(
+                                        (group, groupIdx) => [
+                                            {
+                                                value: `__group_${groupIdx}__`,
+                                                label: `--- ${group.label} ---`,
+                                                disabled: true,
+                                            },
+                                            ...group.options,
+                                        ]
+                                    ),
+                                ]}
+                                required
+                                aria-label="Select arena name"
+                            />
                         </div>
                         <Button
                             className={styles.button}
@@ -209,10 +214,15 @@ export default function SkirmishArena({ warbands }: { warbands: WarbandWithMatch
                             required
                             aria-label="Select defender warband"
                         />
-                        <div className={styles['threshold-fields']} style={{ width: '100%' }}>
-                          <ThresholdAndMaxFieldStrength
-                            completedMatches={right?.completedMatches ?? undefined}
-                          />
+                        <div
+                            className={styles['threshold-fields']}
+                            style={{ width: '100%' }}
+                        >
+                            <ThresholdAndMaxFieldStrength
+                                completedMatches={
+                                    right?.completedMatches ?? undefined
+                                }
+                            />
                         </div>
                     </div>
                 </div>

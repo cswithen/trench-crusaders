@@ -1,58 +1,63 @@
 @use '../../styles/variables.scss' as *;
 .sort-header {
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  text-align: left;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25em;
-  transition: color 0.2s;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    transition: color 0.2s;
 }
 
 .sort-header:focus-visible {
-  outline: 2px solid $tc-accent;
-  outline-offset: 2px;
+    outline: 2px solid $tc-accent;
+    outline-offset: 2px;
 }
 
 .skirmish-table__expand-btn {
-  min-width: 32px;
-  background: none;
-  border: none;
-  color: $tc-link;
-  cursor: pointer;
-  padding: 0;
-  font: inherit;
-  text-decoration: underline;
-  transition: background 0.15s, color 0.15s, border 0.15s;
+    min-width: 32px;
+    background: none;
+    border: none;
+    color: $tc-link;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    text-decoration: underline;
+    transition:
+        background 0.15s,
+        color 0.15s,
+        border 0.15s;
 }
 
 .skirmish-table__expanded {
-  background: $tc-surface-alt;
-  color: $tc-text;
-  font-size: 0.95em;
-  transition: background 0.2s;
+    background: $tc-surface-alt;
+    color: $tc-text;
+    font-size: 0.95em;
+    transition: background 0.2s;
 }
 
 .skirmish-table__expanded-actions {
-  margin-top: 0;
-  text-align: left;
+    margin-top: 0;
+    text-align: left;
 }
 
 .skirmish-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: $tc-background;
-  color: $tc-text;
-  border-radius: $tc-radius;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: background 0.2s, color 0.2s;
+    width: 100%;
+    border-collapse: collapse;
+    background: $tc-background;
+    color: $tc-text;
+    border-radius: $tc-radius;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition:
+        background 0.2s,
+        color 0.2s;
 }
 
 .skirmish-table__row {
-  transition: background 0.2s;
+    transition: background 0.2s;
 }

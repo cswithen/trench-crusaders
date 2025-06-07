@@ -1,32 +1,32 @@
 @use '../../styles/variables.scss' as *;
 
 .navbar {
-  display: flex;
-  gap: 1rem;
-  background: $tc-primary;
-  color: #fff;
-  padding: 1rem;
-  align-items: center;
-  a {
+    display: flex;
+    gap: 1rem;
+    background: $tc-primary;
     color: #fff;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
+    padding: 1rem;
+    align-items: center;
+    a {
+        color: #fff;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
     }
-  }
 }
 
 .themeToggle {
-  margin-left: auto;
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  transition: background 0.2s;
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
 .themeToggle:focus {
-  outline: 2px solid $tc-accent;
+    outline: 2px solid $tc-accent;
 }

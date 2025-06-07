@@ -1,19 +1,19 @@
 @use '../../styles/variables.scss' as *;
 
 .pending-skirmish-expanded {
-  display: flex;
-  flex-direction: column;
-  gap: $tc-gap-md;
+    display: flex;
+    flex-direction: column;
+    gap: $tc-gap-md;
 }
 
 .pending-skirmish-expanded__sides {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $tc-gap-md;
-  justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $tc-gap-md;
+    justify-items: center;
 }
 
 .pending-skirmish-expanded__actions {
-  display: flex;
-  gap: $tc-gap-sm;
+    display: flex;
+    gap: $tc-gap-sm;
 }

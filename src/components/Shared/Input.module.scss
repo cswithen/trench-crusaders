@@ -1,57 +1,58 @@
 @use '../../styles/variables.scss' as *;
 
 .input-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
 }
 
 .label {
-  font-size: 1rem;
-  color: $tc-text;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+    font-size: 1rem;
+    color: $tc-text;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
 }
 
-
 .input {
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
-  border: 2px solid $tc-border;
-  border-radius: $tc-radius;
-  background: $tc-input-bg;
-  color: $tc-text;
-  transition: border-color 0.2s, background 0.2s;
-  box-shadow: none;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    border: 2px solid $tc-border;
+    border-radius: $tc-radius;
+    background: $tc-input-bg;
+    color: $tc-text;
+    transition:
+        border-color 0.2s,
+        background 0.2s;
+    box-shadow: none;
 }
 
 .input:focus {
-  outline: none;
-  border-color: $tc-primary;
-  background: $tc-input-focus-bg;
+    outline: none;
+    border-color: $tc-primary;
+    background: $tc-input-focus-bg;
 }
 
 .input:disabled {
-  background: $tc-surface-alt;
-  color: $tc-disabled-text;
-  border-color: $tc-border-disabled;
-  cursor: not-allowed;
+    background: $tc-surface-alt;
+    color: $tc-disabled-text;
+    border-color: $tc-border-disabled;
+    cursor: not-allowed;
 }
 
 .input:active {
-  border-color: $tc-accent;
-  background: $tc-accent-active;
+    border-color: $tc-accent;
+    background: $tc-accent-active;
 }
 
-.input[aria-invalid="true"],
+.input[aria-invalid='true'],
 .input.error {
-  border-color: $tc-danger-border;
-  background: $tc-danger-bg;
+    border-color: $tc-danger-border;
+    background: $tc-danger-bg;
 }
 
 .error {
-  color: $tc-danger-border;
-  font-size: 0.9rem;
-  margin-top: 0.25rem;
+    color: $tc-danger-border;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
 }

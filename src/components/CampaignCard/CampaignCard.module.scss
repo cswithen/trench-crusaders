@@ -1,23 +1,23 @@
 @use '../../styles/variables.scss' as *;
 
-
 .card {
-  background: $tc-background;
-  border-radius: $tc-radius;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 1rem;
-  min-width: 220px;
-  color: $tc-text;
-  transition: background 0.2s, color 0.2s;
+    background: $tc-background;
+    border-radius: $tc-radius;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    min-width: 220px;
+    color: $tc-text;
+    transition:
+        background 0.2s,
+        color 0.2s;
 }
 
-
 .link {
-  color: $tc-link;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 0.2s;
-  &:hover {
-    color: $tc-accent;
-  }
+    color: $tc-link;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover {
+        color: $tc-accent;
+    }
 }
