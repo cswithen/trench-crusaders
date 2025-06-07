@@ -37,6 +37,7 @@ $tc-accent: var(--tc-accent);
 $tc-background: var(--tc-background);
 $tc-text: var(--tc-text);
 $tc-surface-alt: var(--tc-surface-alt);
+$tc-arena-bg: var(--arena-bg);
 
 :root {
     --tc-primary: oklch(25% 0.05 270);
@@ -82,6 +83,7 @@ $tc-surface-alt: var(--tc-surface-alt);
     --tc-btn-padding-y: 0.2em;
     --tc-btn-padding-x: 0.7em;
     --tc-section-padding: 2rem;
+    --tc-arena-bg: oklch(97% 0.01 270);
 }
 
 .tc-dark {
@@ -128,4 +130,5 @@ $tc-surface-alt: var(--tc-surface-alt);
     --tc-btn-padding-y: 0.2em;
     --tc-btn-padding-x: 0.7em;
     --tc-section-padding: 2rem;
+    --tc-arena-bg: oklch(30% 0.03 270);
 }
