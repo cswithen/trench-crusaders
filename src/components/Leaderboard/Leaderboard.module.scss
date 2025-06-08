@@ -42,3 +42,43 @@ tr:nth-child(even) {
     background: $tc-background;
     transition: background 0.2s;
 }
+
+.leaderboard__faction-logo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.5em;
+    height: 2.5em;
+    max-width: 40px;
+    max-height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: $tc-surface-alt;
+    border: 1.5px solid $tc-border;
+    margin-right: 0.5em;
+}
+
+.leaderboard__faction-tooltip {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    margin-top: 0.5em;
+    background: $tc-info-bg;
+    color: $tc-info-text;
+    border: 1px solid $tc-info-border;
+    border-radius: $tc-radius;
+    padding: 0.5em 1em;
+    font-size: 0.95em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    pointer-events: none;
+    white-space: pre-line;
+    text-align: center;
+}
+
+.leaderboard__faction-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    position: relative;
+}

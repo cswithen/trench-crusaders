@@ -2,6 +2,7 @@ import styles from './Leaderboard.module.scss';
 import type { Warband } from '../../types/Warband';
 import Link from '../Shared/Link';
 import { useFactions, useSubfactions } from '../../hooks/useFactions';
+import { Tooltip } from './Tooltip';
 
 export type WarbandStats = {
     warband: Warband;
@@ -161,6 +162,16 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                         const subfaction = allSubfactions.find(
                             (sf) => sf.id === s.warband.subfaction_id
                         );
+                        const logoSrc =
+                            faction && faction.logo_filename
+                                ? `/src/assets/faction/${faction.logo_filename}.webp`
+                                : undefined;
+                        const tooltipLabel =
+                            faction && subfaction
+                                ? `${faction.name} \u2014 ${subfaction.name}`
+                                : faction
+                                  ? faction.name
+                                  : 'None';
                         return (
                             <tr key={s.warband.id}>
                                 <td>
@@ -173,19 +184,46 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                                     </Link>
                                 </td>
                                 <td>
-                                    <div>
-                                        {faction ? faction.name : <em>None</em>}
+                                    <div
+                                        className={
+                                            styles['leaderboard__faction-cell']
+                                        }
+                                    >
+                                        {logoSrc ? (
+                                            <Tooltip
+                                                label={tooltipLabel}
+                                                className={
+                                                    styles[
+                                                        'leaderboard__faction-tooltip'
+                                                    ]
+                                                }
+                                            >
+                                                <img
+                                                    src={logoSrc}
+                                                    alt={
+                                                        faction
+                                                            ? `${faction.name} logo`
+                                                            : 'Faction logo'
+                                                    }
+                                                    className={
+                                                        styles[
+                                                            'leaderboard__faction-logo'
+                                                        ]
+                                                    }
+                                                    tabIndex={0}
+                                                />
+                                            </Tooltip>
+                                        ) : (
+                                            <span
+                                                className={
+                                                    styles[
+                                                        'leaderboard__faction-logo'
+                                                    ]
+                                                }
+                                                aria-label="No faction logo"
+                                            />
+                                        )}
                                     </div>
-                                    {subfaction && (
-                                        <div
-                                            style={{
-                                                fontSize: '0.95em',
-                                                color: '#888',
-                                            }}
-                                        >
-                                            ({subfaction.name})
-                                        </div>
-                                    )}
                                 </td>
                                 <td>{s.wins}</td>
                                 <td>{s.losses}</td>

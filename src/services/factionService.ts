@@ -3,7 +3,9 @@ import type { Faction, Subfaction } from '../types/Faction';
 
 export const factionService = {
     getAll: async (): Promise<Faction[]> => {
-        const { data } = await supabase.from('factions').select('*');
+        const { data } = await supabase
+            .from('factions')
+            .select('id, name, logo_filename');
         return data || [];
     },
     getSubfactions: async (factionId: string): Promise<Subfaction[]> => {

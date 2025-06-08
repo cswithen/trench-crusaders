@@ -146,15 +146,42 @@ export default function WarbandPage() {
             ) : (
                 <>
                     <h3>{warband.name}</h3>
+                    {(() => {
+                        const faction = factions.find(
+                            (f) => f.id === warband.faction_id
+                        );
+                        if (faction?.logo_filename) {
+                            return (
+                                <img
+                                    src={`/src/assets/faction/${faction.logo_filename}.webp`}
+                                    alt={`${faction.name} logo`}
+                                    className={styles['faction-logo']}
+                                    style={{
+                                        maxWidth: 128,
+                                        maxHeight: 128,
+                                        marginBottom: 8,
+                                    }}
+                                />
+                            );
+                        }
+                        return null;
+                    })()}
                     <div>
                         <strong>Faction:</strong>{' '}
-                        {factions.find((f) => f.id === warband.faction_id)
-                            ?.name || <em>None</em>}
+                        {(() => {
+                            const faction = factions.find(
+                                (f) => f.id === warband.faction_id
+                            );
+                            return faction ? faction.name : <em>None</em>;
+                        })()}
                         <br />
                         <strong>Subfaction:</strong>{' '}
-                        {subfactions.find(
-                            (sf) => sf.id === warband.subfaction_id
-                        )?.name || <em>None</em>}
+                        {(() => {
+                            const subfaction = subfactions.find(
+                                (sf) => sf.id === warband.subfaction_id
+                            );
+                            return subfaction ? subfaction.name : <em>None</em>;
+                        })()}
                     </div>
                     {isOwner && (
                         <Button

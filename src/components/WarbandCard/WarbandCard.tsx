@@ -33,15 +33,19 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
 
     return (
         <div className={styles.card}>
-            <h3>{warband.name}</h3>
+            {faction?.logo_filename && (
+                <img
+                    src={`/src/assets/faction/${faction.logo_filename}.webp`}
+                    alt={`${faction.name} logo`}
+                    className={styles['faction-logo']}
+                />
+            )}
+            <h3 className={styles['warband-name']}>{warband.name}</h3>
             <p>
                 <strong>Patron:</strong>{' '}
                 {(owner as Profile)?.display_name ||
                     (owner as Profile)?.email ||
                     warband.owner_id}
-            </p>
-            <p>
-                <strong>Campaign:</strong> {campaign && campaign.name}
             </p>
             <div className={styles['meta']}>
                 <span className={styles['meta__faction']}>
@@ -54,6 +58,9 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
                     </div>
                 )}
             </div>
+            <p>
+                <strong>Campaign:</strong> {campaign && campaign.name}
+            </p>
             <div className={styles.stats}>
                 <span className={styles['stats--wins']}>
                     <strong>Wins:</strong>&nbsp;{wins}
@@ -62,7 +69,7 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
                     <strong>Losses:</strong>&nbsp;{losses}
                 </span>
                 <span className={styles['stats--pending']}>
-                    <strong>Pending:</strong>&nbsp;{pending}
+                    <strong>Ongoing:</strong>&nbsp;{pending}
                 </span>
             </div>
         </div>

@@ -143,9 +143,9 @@ export default function CampaignDetails() {
 
             <SkirmishArena warbands={warbandsWithMatches} />
 
-            <h3>Pending Skirmishes</h3>
+            <h3>Ongoing Skirmishes</h3>
             {pendingSkirmishes.length === 0 ? (
-                <p>No pending skirmishes.</p>
+                <p>No ongoing skirmishes.</p>
             ) : (
                 <PendingSkirmishTable
                     skirmishes={pendingSkirmishes}
