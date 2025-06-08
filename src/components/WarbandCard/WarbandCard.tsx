@@ -31,12 +31,17 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
     ).length;
     const pending = allMatches.filter((sk) => !sk.winner_id).length;
 
+    const logoSrc =
+        faction && faction.logo_filename
+            ? `/assets/faction/${faction.logo_filename}.webp`
+            : undefined;
+
     return (
         <div className={styles.card}>
-            {faction?.logo_filename && (
+            {logoSrc && (
                 <img
-                    src={`/src/assets/faction/${faction.logo_filename}.webp`}
-                    alt={`${faction.name} logo`}
+                    src={logoSrc}
+                    alt={faction ? `${faction.name} logo` : 'Faction logo'}
                     className={styles['faction-logo']}
                 />
             )}

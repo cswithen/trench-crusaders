@@ -150,21 +150,22 @@ export default function WarbandPage() {
                         const faction = factions.find(
                             (f) => f.id === warband.faction_id
                         );
-                        if (faction?.logo_filename) {
-                            return (
-                                <img
-                                    src={`/src/assets/faction/${faction.logo_filename}.webp`}
-                                    alt={`${faction.name} logo`}
-                                    className={styles['faction-logo']}
-                                    style={{
-                                        maxWidth: 128,
-                                        maxHeight: 128,
-                                        marginBottom: 8,
-                                    }}
-                                />
-                            );
-                        }
-                        return null;
+                        const logoSrc =
+                            faction && faction.logo_filename
+                                ? `/assets/faction/${faction.logo_filename}.webp`
+                                : undefined;
+                        return logoSrc ? (
+                            <img
+                                src={logoSrc}
+                                alt={faction ? `${faction.name} logo` : 'Faction logo'}
+                                className={styles['faction-logo']}
+                                style={{
+                                    maxWidth: 128,
+                                    maxHeight: 128,
+                                    marginBottom: 8,
+                                }}
+                            />
+                        ) : null;
                     })()}
                     <div>
                         <strong>Faction:</strong>{' '}
