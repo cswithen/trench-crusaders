@@ -164,7 +164,7 @@ export default function Leaderboard({ stats }: { stats: WarbandStats[] }) {
                         );
                         const logoSrc =
                             faction && faction.logo_filename
-                                ? `/src/assets/faction/${faction.logo_filename}.webp`
+                                ? `/assets/faction/${faction.logo_filename}.webp`
                                 : undefined;
                         const tooltipLabel =
                             faction && subfaction
