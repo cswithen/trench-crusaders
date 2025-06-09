@@ -104,18 +104,18 @@ export default function CampaignDetails() {
     if (!campaign) return <div>Campaign not found.</div>;
 
     const leaderboardStats: WarbandStats[] = campaignWarbands.map((w) => {
-        const completed = skirmishes.filter(
+        const allMatches = skirmishes.filter(
             (sk) =>
-                (sk.left_warband_id === w.id || sk.right_warband_id === w.id) &&
-                sk.winner_id
+                sk.attacker_warband_id === w.id || sk.defender_warband_id === w.id
         );
-        const pending = skirmishes.filter(
-            (sk) =>
-                (sk.left_warband_id === w.id || sk.right_warband_id === w.id) &&
-                !sk.winner_id
-        );
+        const completed = allMatches.filter((sk) => !!sk.winner_id);
+        const pending = allMatches.filter((sk) => !sk.winner_id);
         const wins = completed.filter((sk) => sk.winner_id === w.id).length;
-        const losses = completed.filter((sk) => sk.winner_id !== w.id).length;
+        const losses = completed.filter(
+            (sk) => sk.winner_id && sk.winner_id !== w.id &&
+                (sk.attacker_warband_id === w.id || sk.defender_warband_id === w.id)
+        ).length;
+
         return {
             warband: w,
             matches: completed.length,

@@ -9,8 +9,8 @@ import Button from '../Shared/Button';
 export interface PendingSkirmish {
     id: string;
     arena_name?: string | null;
-    left_warband_id: string;
-    right_warband_id: string;
+    attacker_warband_id: string;
+    defender_warband_id: string;
     created_at?: string;
 }
 
@@ -69,25 +69,25 @@ const PendingSkirmishTable: React.FC<Props> = ({
                     bValue = (b.arena_name || '').toLowerCase();
                     break;
                 case 'attacker': {
-                    const leftA =
-                        warbands.find((w) => w.id === a.left_warband_id)
+                    const attackerA =
+                        warbands.find((w) => w.id === a.attacker_warband_id)
                             ?.name || '';
-                    const leftB =
-                        warbands.find((w) => w.id === b.left_warband_id)
+                    const attackerB =
+                        warbands.find((w) => w.id === b.attacker_warband_id)
                             ?.name || '';
-                    aValue = leftA.toLowerCase();
-                    bValue = leftB.toLowerCase();
+                    aValue = attackerA.toLowerCase();
+                    bValue = attackerB.toLowerCase();
                     break;
                 }
                 case 'defender': {
-                    const rightA =
-                        warbands.find((w) => w.id === a.right_warband_id)
+                    const defenderA =
+                        warbands.find((w) => w.id === a.defender_warband_id)
                             ?.name || '';
-                    const rightB =
-                        warbands.find((w) => w.id === b.right_warband_id)
+                    const defenderB =
+                        warbands.find((w) => w.id === b.defender_warband_id)
                             ?.name || '';
-                    aValue = rightA.toLowerCase();
-                    bValue = rightB.toLowerCase();
+                    aValue = defenderA.toLowerCase();
+                    bValue = defenderB.toLowerCase();
                     break;
                 }
                 default:
@@ -171,9 +171,9 @@ const PendingSkirmishTable: React.FC<Props> = ({
             ]}
             getRowKey={(sk) => sk.id}
             renderRow={(sk, expanded, toggleExpand) => {
-                const left = warbands.find((w) => w.id === sk.left_warband_id);
-                const right = warbands.find(
-                    (w) => w.id === sk.right_warband_id
+                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
+                const defender = warbands.find(
+                    (w) => w.id === sk.defender_warband_id
                 );
                 return (
                     <tr
@@ -200,8 +200,8 @@ const PendingSkirmishTable: React.FC<Props> = ({
                             </button>
                         </td>
                         <td>{sk.arena_name || 'Unknown Arena'}</td>
-                        <td>{left?.name || sk.left_warband_id}</td>
-                        <td>{right?.name || sk.right_warband_id}</td>
+                        <td>{attacker?.name || sk.attacker_warband_id}</td>
+                        <td>{defender?.name || sk.defender_warband_id}</td>
                         <td>
                             {sk.created_at
                                 ? new Date(sk.created_at).toLocaleString()
@@ -211,9 +211,9 @@ const PendingSkirmishTable: React.FC<Props> = ({
                 );
             }}
             renderExpanded={(sk) => {
-                const left = warbands.find((w) => w.id === sk.left_warband_id);
-                const right = warbands.find(
-                    (w) => w.id === sk.right_warband_id
+                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
+                const defender = warbands.find(
+                    (w) => w.id === sk.defender_warband_id
                 );
                 return (
                     <>
@@ -241,30 +241,30 @@ const PendingSkirmishTable: React.FC<Props> = ({
                                         ]
                                     }
                                 >
-                                    <strong>Attacker</strong>
-                                    <ThresholdAndMaxFieldStrength
-                                        completedMatches={
-                                            left?.completedMatches ?? 0
-                                        }
-                                    />
-                                    <Button
-                                        variant="primary"
-                                        className={
-                                            styles[
-                                                'skirmish-list__button--winner'
-                                            ]
-                                        }
-                                        aria-label={`Mark ${left?.name || 'Attacker'} as winner`}
-                                        onClick={() =>
-                                            onMarkWinner(
-                                                sk.id,
-                                                sk.left_warband_id
-                                            )
-                                        }
-                                        disabled={isMarkingWinner}
-                                    >
-                                        {left?.name || 'Attacker'} Won
-                                    </Button>
+                                <strong>Attacker</strong>
+                                <ThresholdAndMaxFieldStrength
+                                    completedMatches={
+                                        attacker?.completedMatches ?? 0
+                                    }
+                                />
+                                <Button
+                                    variant="primary"
+                                    className={
+                                        styles[
+                                            'skirmish-list__button--winner'
+                                        ]
+                                    }
+                                    aria-label={`Mark ${attacker?.name || 'Attacker'} as winner`}
+                                    onClick={() =>
+                                        onMarkWinner(
+                                            sk.id,
+                                            sk.attacker_warband_id
+                                        )
+                                    }
+                                    disabled={isMarkingWinner}
+                                >
+                                    {attacker?.name || 'Attacker'} Won
+                                </Button>
                                 </div>
                                 <div
                                     className={
@@ -273,30 +273,30 @@ const PendingSkirmishTable: React.FC<Props> = ({
                                         ]
                                     }
                                 >
-                                    <strong>Defender</strong>
-                                    <ThresholdAndMaxFieldStrength
-                                        completedMatches={
-                                            right?.completedMatches ?? 0
-                                        }
-                                    />
-                                    <Button
-                                        variant="primary"
-                                        className={
-                                            styles[
-                                                'skirmish-list__button--defender'
-                                            ]
-                                        }
-                                        aria-label={`Mark ${right?.name || 'Defender'} as winner`}
-                                        onClick={() =>
-                                            onMarkWinner(
-                                                sk.id,
-                                                sk.right_warband_id
-                                            )
-                                        }
-                                        disabled={isMarkingWinner}
-                                    >
-                                        {right?.name || 'Defender'} Won
-                                    </Button>
+                                <strong>Defender</strong>
+                                <ThresholdAndMaxFieldStrength
+                                    completedMatches={
+                                        defender?.completedMatches ?? 0
+                                    }
+                                />
+                                <Button
+                                    variant="primary"
+                                    className={
+                                        styles[
+                                            'skirmish-list__button--defender'
+                                        ]
+                                    }
+                                    aria-label={`Mark ${defender?.name || 'Defender'} as winner`}
+                                    onClick={() =>
+                                        onMarkWinner(
+                                            sk.id,
+                                            sk.defender_warband_id
+                                        )
+                                    }
+                                    disabled={isMarkingWinner}
+                                >
+                                    {defender?.name || 'Defender'} Won
+                                </Button>
                                 </div>
                             </div>
                             <div

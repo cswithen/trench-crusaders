@@ -3,8 +3,8 @@ import { supabase } from './supabaseClient';
 export type Skirmish = {
     id: string;
     campaign_id: string;
-    left_warband_id: string;
-    right_warband_id: string;
+    attacker_warband_id: string;
+    defender_warband_id: string;
     winner_id: string | null;
     arena_name: string | null;
     created_at: string;
@@ -33,14 +33,14 @@ export const skirmishService = {
     },
     create: async ({
         campaign_id,
-        left_warband_id,
-        right_warband_id,
+        attacker_warband_id,
+        defender_warband_id,
         winner_id,
         arena_name,
     }: {
         campaign_id: string;
-        left_warband_id: string;
-        right_warband_id: string;
+        attacker_warband_id: string;
+        defender_warband_id: string;
         winner_id: string | null;
         arena_name: string | null;
     }) => {
@@ -49,8 +49,8 @@ export const skirmishService = {
             .insert([
                 {
                     campaign_id,
-                    left_warband_id,
-                    right_warband_id,
+                    attacker_warband_id,
+                    defender_warband_id,
                     winner_id,
                     arena_name,
                 },

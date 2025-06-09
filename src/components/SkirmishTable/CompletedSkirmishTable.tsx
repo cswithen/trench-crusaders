@@ -71,25 +71,25 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
                     bValue = (b.arena_name || '').toLowerCase();
                     break;
                 case 'attacker': {
-                    const leftA =
-                        warbands.find((w) => w.id === a.left_warband_id)
+                    const attackerA =
+                        warbands.find((w) => w.id === a.attacker_warband_id)
                             ?.name || '';
-                    const leftB =
-                        warbands.find((w) => w.id === b.left_warband_id)
+                    const attackerB =
+                        warbands.find((w) => w.id === b.attacker_warband_id)
                             ?.name || '';
-                    aValue = leftA.toLowerCase();
-                    bValue = leftB.toLowerCase();
+                    aValue = attackerA.toLowerCase();
+                    bValue = attackerB.toLowerCase();
                     break;
                 }
                 case 'defender': {
-                    const rightA =
-                        warbands.find((w) => w.id === a.right_warband_id)
+                    const defenderA =
+                        warbands.find((w) => w.id === a.defender_warband_id)
                             ?.name || '';
-                    const rightB =
-                        warbands.find((w) => w.id === b.right_warband_id)
+                    const defenderB =
+                        warbands.find((w) => w.id === b.defender_warband_id)
                             ?.name || '';
-                    aValue = rightA.toLowerCase();
-                    bValue = rightB.toLowerCase();
+                    aValue = defenderA.toLowerCase();
+                    bValue = defenderB.toLowerCase();
                     break;
                 }
                 default:
@@ -174,10 +174,8 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
             ]}
             getRowKey={(sk) => sk.id}
             renderRow={(sk, expanded, toggleExpand) => {
-                const left = warbands.find((w) => w.id === sk.left_warband_id);
-                const right = warbands.find(
-                    (w) => w.id === sk.right_warband_id
-                );
+                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
+                const defender = warbands.find((w) => w.id === sk.defender_warband_id);
                 return (
                     <tr className={styles['skirmish-table__row']} key={sk.id}>
                         <td>
@@ -197,17 +195,17 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
                         </td>
                         <td>{sk.arena_name || 'Unknown Arena'}</td>
                         <td>
-                            {left?.name || sk.left_warband_id}
-                            {sk.winner_id === sk.left_warband_id && trophy}
+                            {attacker?.name || sk.attacker_warband_id}
+                            {sk.winner_id === sk.attacker_warband_id && trophy}
                             {sk.winner_id &&
-                                sk.winner_id !== sk.left_warband_id &&
+                                sk.winner_id !== sk.attacker_warband_id &&
                                 skull}
                         </td>
                         <td>
-                            {right?.name || sk.right_warband_id}
-                            {sk.winner_id === sk.right_warband_id && trophy}
+                            {defender?.name || sk.defender_warband_id}
+                            {sk.winner_id === sk.defender_warband_id && trophy}
                             {sk.winner_id &&
-                                sk.winner_id !== sk.right_warband_id &&
+                                sk.winner_id !== sk.defender_warband_id &&
                                 skull}
                         </td>
                         <td>
@@ -219,27 +217,25 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
                 );
             }}
             renderExpanded={(sk) => {
-                const left = warbands.find((w) => w.id === sk.left_warband_id);
-                const right = warbands.find(
-                    (w) => w.id === sk.right_warband_id
-                );
+                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
+                const defender = warbands.find((w) => w.id === sk.defender_warband_id);
                 const winner = warbands.find((w) => w.id === sk.winner_id);
                 return (
                     <>
                         <strong>Arena:</strong> {sk.arena_name || 'Unknown'}
                         <br />
                         <strong>Attacker:</strong>{' '}
-                        {left?.name || sk.left_warband_id}
-                        {sk.winner_id === sk.left_warband_id && trophy}
+                        {attacker?.name || sk.attacker_warband_id}
+                        {sk.winner_id === sk.attacker_warband_id && trophy}
                         {sk.winner_id &&
-                            sk.winner_id !== sk.left_warband_id &&
+                            sk.winner_id !== sk.attacker_warband_id &&
                             skull}
                         <br />
                         <strong>Defender:</strong>{' '}
-                        {right?.name || sk.right_warband_id}
-                        {sk.winner_id === sk.right_warband_id && trophy}
+                        {defender?.name || sk.defender_warband_id}
+                        {sk.winner_id === sk.defender_warband_id && trophy}
                         {sk.winner_id &&
-                            sk.winner_id !== sk.right_warband_id &&
+                            sk.winner_id !== sk.defender_warband_id &&
                             skull}
                         <br />
                         <strong>Winner:</strong> {winner?.name || sk.winner_id}

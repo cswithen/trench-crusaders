@@ -16,8 +16,8 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
 }) => {
     const matches = skirmishes.filter(
         (sk) =>
-            sk.left_warband_id === warband.id ||
-            sk.right_warband_id === warband.id
+            sk.attacker_warband_id === warband.id ||
+            sk.defender_warband_id === warband.id
     );
 
     return (
@@ -27,28 +27,31 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
                     <th>Date</th>
                     <th>Arena</th>
                     <th>Opponent</th>
+                    <th>Role</th>
                     <th>Result</th>
                 </tr>
             </thead>
             <tbody>
                 {matches.length === 0 && (
                     <tr>
-                        <td colSpan={4}>
+                        <td colSpan={5}>
                             <em>No matches yet.</em>
                         </td>
                     </tr>
                 )}
                 {matches.map((sk) => {
-                    const isLeft = sk.left_warband_id === warband.id;
+                    // Determine if this warband was the attacker or defender
+                    const isAttacker = sk.attacker_warband_id === warband.id;
                     const opponent = warbands.find(
                         (w) =>
                             w.id ===
-                            (isLeft ? sk.right_warband_id : sk.left_warband_id)
+                            (isAttacker ? sk.defender_warband_id : sk.attacker_warband_id)
                     );
                     let result: 'win' | 'loss' | 'pending';
                     if (!sk.winner_id) result = 'pending';
                     else if (sk.winner_id === warband.id) result = 'win';
                     else result = 'loss';
+                    const role = isAttacker ? 'Attacker' : 'Defender';
                     return (
                         <tr
                             key={sk.id}
@@ -75,6 +78,7 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
                             <td>
                                 {opponent?.name || opponent?.id || 'Unknown'}
                             </td>
+                            <td>{role}</td>
                             <td style={{ textTransform: 'capitalize' }}>
                                 {result}
                             </td>

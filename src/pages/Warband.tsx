@@ -42,8 +42,8 @@ export default function WarbandPage() {
 
     const allMatches = skirmishes.filter(
         (sk) =>
-            sk.left_warband_id === warband.id ||
-            sk.right_warband_id === warband.id
+            sk.attacker_warband_id === warband.id ||
+            sk.defender_warband_id === warband.id
     );
     const completedMatches = allMatches.filter((sk) => sk.winner_id);
     const pendingMatches = allMatches.filter((sk) => !sk.winner_id);

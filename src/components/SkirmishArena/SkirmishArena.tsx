@@ -52,24 +52,24 @@ export default function SkirmishArena({
 }) {
     const { id: campaignId } = useParams<{ id: string }>();
     const createSkirmish = useCreateSkirmish();
-    const [left, setLeft] = useState<WarbandWithMatches | null>(null);
-    const [right, setRight] = useState<WarbandWithMatches | null>(null);
+    const [attacker, setAttacker] = useState<WarbandWithMatches | null>(null);
+    const [defender, setDefender] = useState<WarbandWithMatches | null>(null);
     const [arenaName, setArenaName] = useState<string>('__select_arena__');
     const [showForm, setShowForm] = useState(false);
 
-    function handleSelect(side: 'left' | 'right', id: string) {
+    function handleSelect(side: 'attacker' | 'defender', id: string) {
         const warband = warbands.find((w) => String(w.id) === id) || null;
-        if (side === 'left') {
-            setLeft(warband);
-            if (warband && right?.id === warband.id) setRight(null);
+        if (side === 'attacker') {
+            setAttacker(warband);
+            if (warband && defender?.id === warband.id) setDefender(null);
         } else {
-            setRight(warband);
-            if (warband && left?.id === warband.id) setLeft(null);
+            setDefender(warband);
+            if (warband && attacker?.id === warband.id) setAttacker(null);
         }
     }
 
     function handleLockIn() {
-        if (!campaignId || !left || !right || !arenaName) return;
+        if (!campaignId || !attacker || !defender || !arenaName) return;
         let backendArenaName = arenaName;
         for (const group of arenaOptions) {
             const found = group.options.find((opt) => opt.value === arenaName);
@@ -81,15 +81,15 @@ export default function SkirmishArena({
         createSkirmish.mutate(
             {
                 campaign_id: campaignId,
-                left_warband_id: left.id,
-                right_warband_id: right.id,
+                attacker_warband_id: attacker.id,
+                defender_warband_id: defender.id,
                 winner_id: null,
                 arena_name: backendArenaName,
             },
             {
                 onSuccess: () => {
-                    setLeft(null);
-                    setRight(null);
+                    setAttacker(null);
+                    setDefender(null);
                     setArenaName('');
                     setShowForm(false);
                 },
@@ -113,8 +113,8 @@ export default function SkirmishArena({
                         <h4>Attacker</h4>
                         <Select
                             label="Attacker Warband"
-                            value={left?.id ? String(left.id) : ''}
-                            onChange={(val) => handleSelect('left', val)}
+                            value={attacker?.id ? String(attacker.id) : ''}
+                            onChange={(val) => handleSelect('attacker', val)}
                             options={[
                                 {
                                     value: '',
@@ -135,7 +135,7 @@ export default function SkirmishArena({
                         >
                             <ThresholdAndMaxFieldStrength
                                 completedMatches={
-                                    left?.completedMatches ?? undefined
+                                    attacker?.completedMatches ?? undefined
                                 }
                             />
                         </div>
@@ -173,8 +173,8 @@ export default function SkirmishArena({
                             className={styles.button}
                             onClick={handleLockIn}
                             disabled={
-                                !left ||
-                                !right ||
+                                !attacker ||
+                                !defender ||
                                 !arenaName ||
                                 arenaName === '__select_arena__' ||
                                 createSkirmish.status === 'pending'
@@ -198,8 +198,8 @@ export default function SkirmishArena({
                         <h4>Defender</h4>
                         <Select
                             label="Defender Warband"
-                            value={right?.id ? String(right.id) : ''}
-                            onChange={(val) => handleSelect('right', val)}
+                            value={defender?.id ? String(defender.id) : ''}
+                            onChange={(val) => handleSelect('defender', val)}
                             options={[
                                 {
                                     value: '',
@@ -220,7 +220,7 @@ export default function SkirmishArena({
                         >
                             <ThresholdAndMaxFieldStrength
                                 completedMatches={
-                                    right?.completedMatches ?? undefined
+                                    defender?.completedMatches ?? undefined
                                 }
                             />
                         </div>
