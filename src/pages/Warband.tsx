@@ -28,6 +28,8 @@ export default function WarbandPage() {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
+    const [subtitle, setSubtitle] = useState(warband?.warband_subtitle || '');
+    const [description, setDescription] = useState(warband?.warband_description || '');
 
     const { data: factions = [] } = useFactions();
     const { data: subfactions = [] } = useSubfactions(factionId || undefined);
@@ -36,6 +38,8 @@ export default function WarbandPage() {
         setName(warband?.name || '');
         setFactionId(warband?.faction_id ?? null);
         setSubfactionId(warband?.subfaction_id ?? null);
+        setSubtitle(warband?.warband_subtitle || '');
+        setDescription(warband?.warband_description || '');
     }, [warband]);
 
     if (!warband) return <div>Warband not found.</div>;
@@ -68,6 +72,8 @@ export default function WarbandPage() {
                     name,
                     faction_id: factionId || null,
                     subfaction_id: subfactionId || null,
+                    warband_subtitle: subtitle,
+                    warband_description: description,
                 },
             });
             setEditing(false);
@@ -89,6 +95,15 @@ export default function WarbandPage() {
                         onChange={(e) => setName(e.target.value)}
                         disabled={saving}
                         label="Warband Name"
+                    />
+                    <Input
+                        value={subtitle}
+                        onChange={(e) => {
+                            if (e.target.value.length <= 50) setSubtitle(e.target.value);
+                        }}
+                        disabled={saving}
+                        label="Subtitle (max 50 chars)"
+                        maxLength={50}
                     />
                     <div style={{ margin: '1em 0' }}>
                         <Select
@@ -122,6 +137,23 @@ export default function WarbandPage() {
                             ]}
                             disabled={saving || !factionId}
                         />
+                    </div>
+                    <div style={{ margin: '1em 0' }}>
+                        <label htmlFor="warband-description" style={{ fontWeight: 600, display: 'block', marginBottom: 4 }}>
+                            Description
+                        </label>
+                        <textarea
+                            id="warband-description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            rows={6}
+                            style={{ width: '100%', fontFamily: 'inherit', fontSize: '1em', borderRadius: 6, border: '1px solid #ccc', padding: 8, resize: 'vertical' }}
+                            disabled={saving}
+                            placeholder="Describe your warband. You can use line breaks for paragraphs."
+                        />
+                        <div style={{ fontSize: '0.95em', color: '#888', marginTop: 2 }}>
+                            You can use line breaks to create paragraphs.
+                        </div>
                     </div>
                     <Button
                         onClick={handleSave}
@@ -202,6 +234,18 @@ export default function WarbandPage() {
                             Warband updated!
                         </span>
                     )}
+                <div style={{ margin: '1em 0' }}>
+                    {warband.warband_subtitle && (
+                        <div style={{ fontWeight: 500, fontSize: '1.1em', color: '#666', marginBottom: 4 }}>
+                            {warband.warband_subtitle}
+                        </div>
+                    )}
+                    {warband.warband_description && (
+                        <div style={{ whiteSpace: 'pre-line', marginBottom: 8 }}>
+                            {warband.warband_description}
+                        </div>
+                    )}
+                </div>
                 </>
             )}
             <div>

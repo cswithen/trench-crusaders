@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Warband } from '../../types/Warband.js';
 import styles from './WarbandCard.module.scss';
 import { useUser } from '../../hooks/useUsers.js';
@@ -19,8 +20,8 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
 
     const allMatches = skirmishes.filter(
         (sk) =>
-            sk.left_warband_id === warband.id ||
-            sk.right_warband_id === warband.id
+            sk.attacker_warband_id === warband.id ||
+            sk.defender_warband_id === warband.id
     );
     const completedMatches = allMatches.filter((sk) => sk.winner_id);
     const wins = completedMatches.filter(
@@ -36,6 +37,9 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
             ? `/assets/faction/${faction.logo_filename}.webp`
             : undefined;
 
+    // Only one state declaration for description open/close
+    const [descOpen, setDescOpen] = React.useState(false);
+
     return (
         <div className={styles.card}>
             {logoSrc && (
@@ -45,7 +49,9 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
                     className={styles['faction-logo']}
                 />
             )}
-            <h3 className={styles['warband-name']}>{warband.name}</h3>
+            <h3 className={styles['warband-name']}>
+                {warband.name}
+            </h3>
             <p>
                 <strong>Patron:</strong>{' '}
                 {(owner as Profile)?.display_name ||
@@ -77,6 +83,44 @@ export default function WarbandCard({ warband }: { warband: Warband }) {
                     <strong>Ongoing:</strong>&nbsp;{pending}
                 </span>
             </div>
+            {(warband.warband_subtitle || warband.warband_description) && (
+                <>
+                    {(warband.warband_description) && (
+                        <button
+                            type="button"
+                            className={styles['expand-description-btn']}
+                            aria-expanded={descOpen}
+                            aria-controls={`desc-${warband.id}`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setDescOpen((o) => !o);
+                            }}
+                            tabIndex={0}
+                            title={descOpen ? 'Hide Description' : 'Show Description'}
+                        >
+                            <span aria-hidden="true" className={styles['expand-icon']}>
+                                {descOpen ? '▾' : '▸'}
+                            </span>
+                        </button>
+                    )}
+                    {descOpen && (
+                        <div
+                            id={`desc-${warband.id}`}
+                            className={styles['warband-description']}
+                            aria-live="polite"
+                            style={{ whiteSpace: 'pre-line' }}
+                        >
+                            {warband.warband_subtitle && (
+                                <div className={styles['warband-subtitle']} style={{ marginBottom: warband.warband_description ? 8 : 0 }}>
+                                    {warband.warband_subtitle}
+                                </div>
+                            )}
+                            {warband.warband_description}
+                        </div>
+                    )}
+                </>
+            )}
         </div>
     );
 }

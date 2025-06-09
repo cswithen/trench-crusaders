@@ -6,4 +6,6 @@ export type Warband = {
     created_at: string;
     faction_id?: string | null;
     subfaction_id?: string | null;
+    warband_subtitle?: string | null;
+    warband_description?: string | null;
 };

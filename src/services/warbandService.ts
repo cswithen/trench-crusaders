@@ -12,17 +12,21 @@ export const warbandService = {
         owner_id,
         faction_id = null,
         subfaction_id = null,
+        warband_subtitle = null,
+        warband_description = null,
     }: {
         name: string;
         campaign_id: string;
         owner_id: string;
         faction_id?: string | null;
         subfaction_id?: string | null;
+        warband_subtitle?: string | null;
+        warband_description?: string | null;
     }) => {
         await supabase
             .from('warbands')
             .insert([
-                { name, campaign_id, owner_id, faction_id, subfaction_id },
+                { name, campaign_id, owner_id, faction_id, subfaction_id, warband_subtitle, warband_description },
             ]);
     },
     update: async (id: string, updates: Partial<Warband>) => {
