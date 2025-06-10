@@ -1,0 +1,68 @@
+.modal {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  padding: 2rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+  color: #222;
+  border: 2px solid #222;
+  position: relative;
+}
+
+.header {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 1.2em;
+  letter-spacing: 0.02em;
+  text-align: center;
+  border-bottom: 1px dashed #222;
+  padding-bottom: 0.5em;
+}
+
+.field {
+  margin-bottom: 1.1em;
+}
+.label {
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+  display: block;
+  letter-spacing: 0.01em;
+}
+.input, .textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1em;
+  border: 1.5px solid #222;
+  border-radius: 3px;
+  padding: 0.4em 0.7em;
+  background: #f8f8f8;
+  color: #222;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  resize: vertical;
+}
+.textarea {
+  min-height: 80px;
+  white-space: pre-line;
+}
+.actions {
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+  margin-top: 1.5em;
+}
+.typewriter {
+  font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+  background: #f8f8f8;
+  border: 1.5px solid #222;
+  border-radius: 3px;
+  padding: 1em;
+  margin-bottom: 1em;
+  white-space: pre-line;
+  font-size: 1em;
+  color: #222;
+}

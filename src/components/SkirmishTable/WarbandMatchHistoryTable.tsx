@@ -2,6 +2,7 @@ import React from 'react';
 import type { Skirmish } from '../../services/skirmishService';
 import type { Warband } from '../../types/Warband';
 import styles from './WarbandMatchHistoryTable.module.scss';
+import SkirmishReportButton from './SkirmishReportButton';
 
 interface Props {
     warband: Warband;
@@ -29,12 +30,13 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
                     <th>Opponent</th>
                     <th>Role</th>
                     <th>Result</th>
+                    <th>Report</th>
                 </tr>
             </thead>
             <tbody>
                 {matches.length === 0 && (
                     <tr>
-                        <td colSpan={5}>
+                        <td colSpan={6}>
                             <em>No matches yet.</em>
                         </td>
                     </tr>
@@ -62,16 +64,12 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
                                     ? styles['match-history-table__row--win']
                                     : result === 'loss'
                                       ? styles['match-history-table__row--loss']
-                                      : styles[
-                                            'match-history-table__row--pending'
-                                        ])
+                                      : styles['match-history-table__row--pending'])
                             }
                         >
                             <td>
                                 {sk.created_at
-                                    ? new Date(
-                                          sk.created_at
-                                      ).toLocaleDateString()
+                                    ? new Date(sk.created_at).toLocaleDateString()
                                     : 'Unknown'}
                             </td>
                             <td>{sk.arena_name || 'Unknown'}</td>
@@ -82,6 +80,13 @@ export const WarbandMatchHistoryTable: React.FC<Props> = ({
                             <td style={{ textTransform: 'capitalize' }}>
                                 {result}
                             </td>
+                    <td>
+                        <SkirmishReportButton
+                            warbandId={warband.id}
+                            skirmishId={sk.id}
+                            ownerId={warband.owner_id}
+                        />
+                    </td>
                         </tr>
                     );
                 })}

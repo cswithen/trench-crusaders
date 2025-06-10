@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { OverlayProvider } from 'react-aria';
 import { useWarbands, useUpdateWarband } from '../hooks/useWarbands';
 import { useSkirmishes } from '../hooks/useSkirmishes';
 import { useAuth } from '../hooks/useAuth';
@@ -86,7 +87,8 @@ export default function WarbandPage() {
     }
 
     return (
-        <div className={styles.warbands}>
+        <OverlayProvider>
+            <div className={styles.warbands}>
             <h2>Warband Details</h2>
             {editing ? (
                 <>
@@ -269,5 +271,6 @@ export default function WarbandPage() {
                 warbands={warbands}
             />
         </div>
+        </OverlayProvider>
     );
 }

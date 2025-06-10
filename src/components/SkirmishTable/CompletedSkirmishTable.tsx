@@ -174,8 +174,12 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
             ]}
             getRowKey={(sk) => sk.id}
             renderRow={(sk, expanded, toggleExpand) => {
-                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
-                const defender = warbands.find((w) => w.id === sk.defender_warband_id);
+                const attacker = warbands.find(
+                    (w) => w.id === sk.attacker_warband_id
+                );
+                const defender = warbands.find(
+                    (w) => w.id === sk.defender_warband_id
+                );
                 return (
                     <tr className={styles['skirmish-table__row']} key={sk.id}>
                         <td>
@@ -217,8 +221,12 @@ const CompletedSkirmishTable: React.FC<Props> = ({ skirmishes, warbands }) => {
                 );
             }}
             renderExpanded={(sk) => {
-                const attacker = warbands.find((w) => w.id === sk.attacker_warband_id);
-                const defender = warbands.find((w) => w.id === sk.defender_warband_id);
+                const attacker = warbands.find(
+                    (w) => w.id === sk.attacker_warband_id
+                );
+                const defender = warbands.find(
+                    (w) => w.id === sk.defender_warband_id
+                );
                 const winner = warbands.find((w) => w.id === sk.winner_id);
                 return (
                     <>
