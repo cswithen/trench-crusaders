@@ -13,6 +13,14 @@ export type SkirmishReport = {
 };
 
 export const skirmishReportService = {
+  async getAllByWarband(warband_id: string): Promise<SkirmishReport[]> {
+    const { data, error } = await supabase
+      .from('skirmish_reports')
+      .select('*')
+      .eq('warband_id', warband_id);
+    if (error || !data) return [];
+    return data as SkirmishReport[];
+  },
   async getByWarbandAndSkirmish(warband_id: string, skirmish_id: string): Promise<SkirmishReport | null> {
     const { data, error } = await supabase
       .from('skirmish_reports')

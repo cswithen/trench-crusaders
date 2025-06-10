@@ -1,24 +1,25 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SkirmishReportModal from './SkirmishReportModal';
 import Button from '../Shared/Button';
+import type { SkirmishReport } from '../../services/skirmishReportService';
 
-
-interface SkirmishReportButtonProps {
+export interface SkirmishReportButtonProps {
   warbandId: string;
   skirmishId: string;
   ownerId: string;
+  report?: SkirmishReport | undefined;
 }
 
-export default function SkirmishReportButton({ warbandId, skirmishId, ownerId }: SkirmishReportButtonProps) {
+export function SkirmishReportButton({ warbandId, skirmishId, ownerId, report }: SkirmishReportButtonProps) {
   const [open, setOpen] = useState(false);
   return (
     <>
       <Button
         type="button"
-        variant="secondary"
+        variant={report ? 'primary' : 'secondary'}
         style={{ marginLeft: 6, fontFamily: 'IBM Plex Mono, Courier, monospace', fontSize: '0.9em', padding: '0.1em 0.5em' }}
-        aria-label="View or edit skirmish report"
-        onClick={e => {
+        aria-label={report ? 'View or edit skirmish report' : 'Create skirmish report'}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           if (typeof e === 'object' && 'stopPropagation' in e && typeof e.stopPropagation === 'function') {
             e.stopPropagation();
           }

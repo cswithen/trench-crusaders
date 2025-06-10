@@ -3,12 +3,14 @@ import { OverlayProvider } from 'react-aria';
 import { useWarbands, useUpdateWarband } from '../hooks/useWarbands';
 import { useSkirmishes } from '../hooks/useSkirmishes';
 import { useAuth } from '../hooks/useAuth';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Input from '../components/Shared/Input';
 import Select from '../components/Shared/Select';
 import Button from '../components/Shared/Button';
 import { useFactions, useSubfactions } from '../hooks/useFactions';
-import WarbandMatchHistoryTable from '../components/SkirmishTable/WarbandMatchHistoryTable';
+import { WarbandMatchHistoryTable } from '../components/SkirmishTable/WarbandMatchHistoryTable';
+import { useQuery } from '@tanstack/react-query';
+import { skirmishReportService } from '../services/skirmishReportService';
 import styles from './Warbands.module.scss';
 
 export default function WarbandPage() {
@@ -43,6 +45,22 @@ export default function WarbandPage() {
         setDescription(warband?.warband_description || '');
     }, [warband]);
 
+    const { data: skirmishReports = [] } = useQuery({
+        queryKey: ['skirmishReports', warband?.id ?? ''],
+        queryFn: () => skirmishReportService.getAllByWarband(warband?.id ?? ''),
+        enabled: !!warband,
+    });
+
+    const skirmishReportMap = useMemo(() => {
+        const map: Record<string, typeof skirmishReports[0]> = {};
+        for (const report of skirmishReports) {
+            map[report.skirmish_id] = report;
+        }
+        return map;
+    }, [skirmishReports]);
+
+    const isOwner = user && warband && warband.owner_id === user.id;
+
     if (!warband) return <div>Warband not found.</div>;
 
     const allMatches = skirmishes.filter(
@@ -58,8 +76,6 @@ export default function WarbandPage() {
     const losses = completedMatches.filter(
         (sk) => sk.winner_id && sk.winner_id !== warband.id
     ).length;
-
-    const isOwner = user?.id === warband.owner_id;
 
     async function handleSave() {
         if (!warband) return;
@@ -269,6 +285,7 @@ export default function WarbandPage() {
                 warband={warband}
                 skirmishes={skirmishes}
                 warbands={warbands}
+                skirmishReportMap={skirmishReportMap}
             />
         </div>
         </OverlayProvider>
