@@ -9,7 +9,6 @@ function Login() {
     const { signIn, signUp, user } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [displayName, setDisplayName] = useState('');
     const [isSignUp, setIsSignUp] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -25,7 +24,7 @@ function Login() {
         setMessage(null);
         try {
             if (isSignUp) {
-                await signUp(email, password, displayName);
+                await signUp(email, password);
                 setMessage(
                     'Sign up successful! Please check your email to confirm your account.'
                 );
@@ -62,15 +61,6 @@ function Login() {
                         required
                         label="Password"
                     />
-                    {isSignUp && (
-                        <input
-                            type="text"
-                            placeholder="Display Name"
-                            value={displayName}
-                            onChange={(e) => setDisplayName(e.target.value)}
-                            required
-                        />
-                    )}
                     <Button type="submit">
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>

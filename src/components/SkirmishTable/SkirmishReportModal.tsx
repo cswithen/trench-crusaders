@@ -173,7 +173,7 @@ export default function SkirmishReportModal({ open, onClose, warbandId, skirmish
                 value={form.content ?? ''}
                 onChange={handleChange}
                 rows={7}
-                maxLength={2000}
+                maxLength={4000}
                 style={{ fontFamily: 'inherit' }}
               />
             </div>

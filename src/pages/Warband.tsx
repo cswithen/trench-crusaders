@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { OverlayProvider } from 'react-aria';
 import { useWarbands, useUpdateWarband } from '../hooks/useWarbands';
 import { useSkirmishes } from '../hooks/useSkirmishes';
 import { useAuth } from '../hooks/useAuth';
@@ -32,7 +31,9 @@ export default function WarbandPage() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
     const [subtitle, setSubtitle] = useState(warband?.warband_subtitle || '');
-    const [description, setDescription] = useState(warband?.warband_description || '');
+    const [description, setDescription] = useState(
+        warband?.warband_description || ''
+    );
 
     const { data: factions = [] } = useFactions();
     const { data: subfactions = [] } = useSubfactions(factionId || undefined);
@@ -52,7 +53,7 @@ export default function WarbandPage() {
     });
 
     const skirmishReportMap = useMemo(() => {
-        const map: Record<string, typeof skirmishReports[0]> = {};
+        const map: Record<string, (typeof skirmishReports)[0]> = {};
         for (const report of skirmishReports) {
             map[report.skirmish_id] = report;
         }
@@ -103,8 +104,7 @@ export default function WarbandPage() {
     }
 
     return (
-        <OverlayProvider>
-            <div className={styles.warbands}>
+        <div className={styles.warbands}>
             <h2>Warband Details</h2>
             {editing ? (
                 <>
@@ -117,7 +117,8 @@ export default function WarbandPage() {
                     <Input
                         value={subtitle}
                         onChange={(e) => {
-                            if (e.target.value.length <= 50) setSubtitle(e.target.value);
+                            if (e.target.value.length <= 50)
+                                setSubtitle(e.target.value);
                         }}
                         disabled={saving}
                         label="Subtitle (max 50 chars)"
@@ -157,7 +158,14 @@ export default function WarbandPage() {
                         />
                     </div>
                     <div style={{ margin: '1em 0' }}>
-                        <label htmlFor="warband-description" style={{ fontWeight: 600, display: 'block', marginBottom: 4 }}>
+                        <label
+                            htmlFor="warband-description"
+                            style={{
+                                fontWeight: 600,
+                                display: 'block',
+                                marginBottom: 4,
+                            }}
+                        >
                             Description
                         </label>
                         <textarea
@@ -165,11 +173,25 @@ export default function WarbandPage() {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             rows={6}
-                            style={{ width: '100%', fontFamily: 'inherit', fontSize: '1em', borderRadius: 6, border: '1px solid #ccc', padding: 8, resize: 'vertical' }}
+                            style={{
+                                width: '100%',
+                                fontFamily: 'inherit',
+                                fontSize: '1em',
+                                borderRadius: 6,
+                                border: '1px solid #ccc',
+                                padding: 8,
+                                resize: 'vertical',
+                            }}
                             disabled={saving}
                             placeholder="Describe your warband. You can use line breaks for paragraphs."
                         />
-                        <div style={{ fontSize: '0.95em', color: '#888', marginTop: 2 }}>
+                        <div
+                            style={{
+                                fontSize: '0.95em',
+                                color: '#888',
+                                marginTop: 2,
+                            }}
+                        >
                             You can use line breaks to create paragraphs.
                         </div>
                     </div>
@@ -207,7 +229,11 @@ export default function WarbandPage() {
                         return logoSrc ? (
                             <img
                                 src={logoSrc}
-                                alt={faction ? `${faction.name} logo` : 'Faction logo'}
+                                alt={
+                                    faction
+                                        ? `${faction.name} logo`
+                                        : 'Faction logo'
+                                }
                                 className={styles['faction-logo']}
                                 style={{
                                     maxWidth: 128,
@@ -252,18 +278,30 @@ export default function WarbandPage() {
                             Warband updated!
                         </span>
                     )}
-                <div style={{ margin: '1em 0' }}>
-                    {warband.warband_subtitle && (
-                        <div style={{ fontWeight: 500, fontSize: '1.1em', color: '#666', marginBottom: 4 }}>
-                            {warband.warband_subtitle}
-                        </div>
-                    )}
-                    {warband.warband_description && (
-                        <div style={{ whiteSpace: 'pre-line', marginBottom: 8 }}>
-                            {warband.warband_description}
-                        </div>
-                    )}
-                </div>
+                    <div style={{ margin: '1em 0' }}>
+                        {warband.warband_subtitle && (
+                            <div
+                                style={{
+                                    fontWeight: 500,
+                                    fontSize: '1.1em',
+                                    color: '#666',
+                                    marginBottom: 4,
+                                }}
+                            >
+                                {warband.warband_subtitle}
+                            </div>
+                        )}
+                        {warband.warband_description && (
+                            <div
+                                style={{
+                                    whiteSpace: 'pre-line',
+                                    marginBottom: 8,
+                                }}
+                            >
+                                {warband.warband_description}
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
             <div>
@@ -288,6 +326,5 @@ export default function WarbandPage() {
                 skirmishReportMap={skirmishReportMap}
             />
         </div>
-        </OverlayProvider>
     );
 }

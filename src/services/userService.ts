@@ -12,7 +12,7 @@ export const userService = {
             .from('profiles')
             .select('*')
             .eq('id', id)
-            .single();
+            .maybeSingle();
         return data || null;
     },
     getByIds: async (ids: string[]): Promise<Profile[]> => {

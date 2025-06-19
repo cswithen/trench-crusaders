@@ -9,6 +9,8 @@
   color: #222;
   border: 2px solid #222;
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .header {
