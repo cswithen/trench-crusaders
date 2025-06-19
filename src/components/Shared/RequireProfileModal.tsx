@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useUser } from '../../hooks/useUsers';
 import DisplayNameModal from './DisplayNameModal';
+import { userService } from '../../services/userService';
 
 export default function RequireProfileModal() {
   const { user, updateDisplayName } = useAuth();
@@ -23,7 +24,7 @@ export default function RequireProfileModal() {
       // Poll for up to 2 seconds
       let waited = 0;
       while (waited < 2000) {
-        const newProfile = await import('../../services/userService').then(m => m.userService.getById(user!.id));
+        const newProfile = await userService.getById(user!.id);
         if (newProfile) {
           setShow(false);
           break;
