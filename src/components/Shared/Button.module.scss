@@ -3,6 +3,7 @@
 .button.button--secondary,
 .button--secondary.button {
     background: transparent;
+    padding: relative;
     color: $tc-accent;
     border: 2px solid $tc-accent;
     box-shadow: none;
@@ -35,6 +36,16 @@
 
 .button {
     background: $tc-accent;
+    position: relative;
+    box-shadow: 0px 2px 9px black;
+    text-align: center;
+    min-width: 250px;
+    height: 40px;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: repeat-x;
+    padding: 0 10px;
+    background-image: url('/assets/button/button-primary_bg.webp');
     color: $tc-on-accent;
     border: none;
     border-radius: $tc-radius;
@@ -45,31 +56,53 @@
         background 0.2s,
         color 0.2s,
         box-shadow 0.2s,
-        border-color 0.2s;
+        border-color 0.2s,
+        background-blend-mode 0.2s,
+        filter 0.2s;
 
     &:hover {
-        background: $tc-accent-hover;
+        // background: $tc-accent-hover;
+        filter: saturate(2);
         color: $tc-on-accent;
         box-shadow: 0 2px 8px 0 $tc-accent-shadow;
     }
     &:focus {
         outline: none;
-        background: $tc-accent-focus;
+        // background: $tc-accent-focus;
+        filter: saturate(2);
         color: $tc-on-accent;
-        box-shadow: 0 0 0 2px $tc-accent-focus-shadow;
-        border: 2px solid $tc-accent;
+        // border: 2px solid $tc-accent;
     }
     &:active {
-        background: $tc-accent-active;
+        // background: $tc-accent-active;
         color: $tc-on-accent;
         box-shadow: 0 1px 4px 0 $tc-accent-active-shadow;
         border: 2px solid $tc-accent;
     }
     &:disabled {
-        background: $tc-secondary;
+        // background: $tc-secondary;
+        filter: saturate(0.3);
+        background-blend-mode: saturation;
         cursor: not-allowed;
         color: $tc-on-accent;
         box-shadow: none;
         border: none;
+    }
+
+    &::after {
+        background-image:
+            url('/assets/button/button-primary_edge--left.webp'),
+            url('/assets/button/button-primary_edge--right.webp');
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-size: auto 100%;
+        background-position: left, right;
+        background-repeat: no-repeat;
+        transition: filter 350ms;
+        margin: 0 -10px;
     }
 }

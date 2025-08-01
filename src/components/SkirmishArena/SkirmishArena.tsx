@@ -16,6 +16,7 @@ const arenaOptions = [
             { value: 'Hill 223', label: 'Hill 223' },
             { value: 'Relic Hunt', label: 'Relic Hunt' },
             { value: 'Supply Raid', label: 'Supply Raid' },
+            { value: 'Random Encounter', label: 'Random Encounter' },
         ],
     },
     {
@@ -26,6 +27,7 @@ const arenaOptions = [
             { value: 'Storming the Shores-mid', label: 'Storming the Shores' },
             { value: 'Claim No Man’s Land-mid', label: 'Claim No Man’s Land' },
             { value: 'Dragon Hunt-mid', label: 'Dragon Hunt' },
+            { value: 'Random Encounter', label: 'Random Encounter' },
         ],
     },
     {
@@ -36,6 +38,7 @@ const arenaOptions = [
             { value: 'From Below', label: 'From Below' },
             { value: 'Fields of Glory', label: 'Fields of Glory' },
             { value: 'Storming the Shores-end', label: 'Storming the Shores' },
+            { value: 'Random Encounter', label: 'Random Encounter' },
         ],
     },
     {
